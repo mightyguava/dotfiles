@@ -1,0 +1,18 @@
+alias ll='ls -alFG'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias ucd='cd ~/development/urbancompass'
+alias gnb='git fetch origin; git checkout origin/master -b'
+alias run_backends='~/development/urbancompass/users/yunchi/run_folder_backends.sh'
+alias run_frontend='~/development/urbancompass/scripts/run_frontend.sh'
+alias gr='git rebase -i --autosquash origin/master'
+alias gf='git fetch origin'
+alias genjava='./scripts/gen_idea.py -j'
+
+get_tmux_buffer () {
+  ssh $1 tmux show-buffer -b 0 | pbcopy
+}
+ucssh () {
+  scripts/fab discovery.ssh:"${1}"
+}
