@@ -1,4 +1,4 @@
-[[ -z "$PS1" ]] && return
+[[ -z "$PS1" ]] && return # Do nothing for a non-interactive shell
 
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
@@ -47,12 +47,16 @@ then
   source ~/.aliases
 fi
 
-if [[ -z $(which ec2metadata) ]]; then
+if ! which ec2metadata > /dev/null; then
   # Local mac
   export CREDENTIALS_FILE=${HOME}/credentials
 else
   # EC2
   export CREDENTIALS_FILE=/etc/credentials
+  if [[ -o login ]]; then
+    eval `ssh-agent`
+    ssh-add ~/.ssh/id_rsa
+  fi
 fi
 
 if [[ -e ~/.git-prompt.sh ]]; then
