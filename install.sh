@@ -5,10 +5,16 @@ USAGE="
 $0 [copy] [<target_dir>]
 
 If run without arguments, symlinks the dotfiles to ${HOME}
-If "copy" is provided, copies instead of symlinks, but skips the git submodules
+If 'copy' is provided, copies instead of symlinks, but skips the git submodules
 If a <target_dir> is provided, symlinks/copies to target_dir instead of ${HOME}
+
+If run via 'curl <url_to_script> | bash', will try to download and bootstrap the
+repo to ${HOME}/.dotfiles and run the symlink strategy.
 "
 
+BOOTSTRAP_DIR="${HOME}/.dotfiles"
+
+# Use rsync if copying, ln -sf if symlinking
 if [ -n "$1" ]; then
   if [ "$1" == "copy" ]; then
     shift
@@ -22,18 +28,38 @@ else
   LINK="ln -sf"
 fi
 
+# Set alternate target dir if provided
 if [ "$1" ]; then
   TARGET="$1"
+  shift
 else
   TARGET="${HOME}"
 fi
 
-HERE=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
-${LINK} ${HERE}/zsh/.zshrc ${TARGET}/.zshrc
-${LINK} ${HERE}/common/.aliases ${TARGET}/.aliases
-${LINK} ${HERE}/common/.profile ${TARGET}/.profile
-${LINK} ${HERE}/bash/.bashrc ${TARGET}/.bashrc
-${LINK} ${HERE}/bash/.git-completion.bash ${TARGET}/.git-completion.bash
+if [ -z "${BASH_SOURCE[0]}" ]; then
+  # Eval'ed into bash, not run as script. Check for repo at ~/.dotfiles or
+  # bootstrap.
+  if [ ! -d "${BOOTSTRAP_DIR}" ]; then
+    git clone git@github.com:mightyguava/dotfiles.git ${HOME}/.dotfiles
+    cd "${BOOTSTRAP_DIR}"
+  else
+    cd "${BOOTSTRAP_DIR}"
+    git fetch origin
+    git reset --hard origin/master
+  fi
+
+  SRC="${BOOTSTRAP_DIR}"
+  SHOULD_EXIT=1
+else
+  HERE=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
+  SRC="${HERE}"
+fi
+
+${LINK} ${SRC}/zsh/.zshrc ${TARGET}/.zshrc
+${LINK} ${SRC}/common/.aliases ${TARGET}/.aliases
+${LINK} ${SRC}/common/.profile ${TARGET}/.profile
+${LINK} ${SRC}/bash/.bashrc ${TARGET}/.bashrc
+${LINK} ${SRC}/bash/.git-completion.bash ${TARGET}/.git-completion.bash
 
 rm -rf ${TARGET}/.zsh
 if [ -z "$COPY" ]; then
@@ -41,9 +67,13 @@ if [ -z "$COPY" ]; then
   git submodule init
   git submodule update
 
-  ${LINK} ${HERE}/zsh ${TARGET}/.zsh
+  ${LINK} ${SRC}/zsh ${TARGET}/.zsh
 else
   # Copy the non-submodules
   mkdir -p ${TARGET}/.zsh
-  ${LINK} ${HERE}/zsh/.git-completion.zsh ${TARGET}/.zsh/.git-completion.zsh
+  ${LINK} ${SRC}/zsh/.git-completion.zsh ${TARGET}/.zsh/.git-completion.zsh
+fi
+
+if [ -n "$SHOULD_EXIT" ]; then
+  exit 0
 fi
