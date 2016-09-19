@@ -33,12 +33,17 @@ ${LINK} ${HERE}/zsh/.zshrc ${TARGET}/.zshrc
 ${LINK} ${HERE}/common/.aliases ${TARGET}/.aliases
 ${LINK} ${HERE}/common/.profile ${TARGET}/.profile
 ${LINK} ${HERE}/bash/.bashrc ${TARGET}/.bashrc
+${LINK} ${HERE}/bash/.git-completion.bash ${TARGET}/.git-completion.bash
 
+rm -rf ${TARGET}/.zsh
 if [ -z "$COPY" ]; then
-  # Skip submodules on copy
+  # Initialize submodules if using symlinks
   git submodule init
   git submodule update
 
-  rm -rf ${TARGET}/.zsh
   ${LINK} ${HERE}/zsh ${TARGET}/.zsh
+else
+  # Copy the non-submodules
+  mkdir -p ${TARGET}/.zsh
+  ${LINK} ${HERE}/zsh/.git-completion.zsh ${TARGET}/.zsh/.git-completion.zsh
 fi

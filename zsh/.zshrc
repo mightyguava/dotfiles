@@ -11,6 +11,12 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' substitute 1
 zstyle :compinstall filename '~/.zshrc'
 
+# Enable git completions
+zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+if [[ -f ~/.zsh/.git-completion.zsh ]]; then
+  fpath=(~/.zsh $fpath)
+fi
+
 autoload -Uz compinit
 compinit
 autoload -Uz promptinit
@@ -105,4 +111,3 @@ if [[ -z $_ZSHRC_AUTO_SUGGESTIONS_SOURCED ]]; then
       source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
   export _ZSHRC_AUTO_SUGGESTIONS_SOURCED=1
 fi
-
