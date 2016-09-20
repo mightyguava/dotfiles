@@ -1,0 +1,22 @@
+[alias]
+  amend = commit --amend
+  br = branch
+  co = checkout
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  rmb = branch -D
+  s = status
+  ss = show-branch --list
+  ignore = update-index --assume-unchanged
+  unignore = update-index --no-assume-unchanged
+  unignore-all = update-index --really-refresh
+[core]
+	excludesfile = ~/.gitignore
+[diff]
+  tool = meld
+[user]
+	name = Yunchi Luo
+	email = mightyguava@gmail.com
+[push]
+	default = simple
+[http]
+  cookiefile = ~/.gitcookies
