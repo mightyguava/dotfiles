@@ -10,6 +10,7 @@ Plug 'tpope/vim-fugitive'
 
 " Wombat theme
 Plug 'vim-scripts/Wombat'
+Plug 'vim-scripts/wombat256.vim'
 
 " Fzf fuzzy file matcher
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -157,7 +158,11 @@ set splitbelow                  " Puts new split windows to the bottom of the cu
 syntax enable
 
 try
-    colorscheme wombat
+    if &term == 'xterm' || &term == 'xterm256' || &term == 'screen'
+        colorscheme wombat256mod
+    else
+        colorscheme wombat
+    endif
 catch
 endtry
 
