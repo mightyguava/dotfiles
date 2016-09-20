@@ -77,16 +77,6 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 # Use Linux-flavor colors for zsh ls completion
 zstyle ':completion:*:default' list-colors "${LS_COLORS}"
 
-# Enable color support of ls on linux and also add handy aliases
-if [[ -x /usr/bin/dircolors ]]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
 # Configure prompt
 autoload -Uz colors && colors
 setopt PROMPT_SUBST
