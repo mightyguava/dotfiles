@@ -57,6 +57,7 @@ fi
 
 ${LINK} ${SRC}/zsh/.zshrc ${TARGET}/.zshrc
 ${LINK} ${SRC}/common/.aliases ${TARGET}/.aliases
+${LINK} ${SRC}/common/.git-prompt.sh ${TARGET}/.git-prompt.sh
 ${LINK} ${SRC}/common/.profile ${TARGET}/.profile
 ${LINK} ${SRC}/bash/.bashrc ${TARGET}/.bashrc
 ${LINK} ${SRC}/bash/.git-completion.bash ${TARGET}/.git-completion.bash
