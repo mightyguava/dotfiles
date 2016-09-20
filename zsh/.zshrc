@@ -91,16 +91,14 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-if [[ -z $_ZSHRC_AUTO_SUGGESTIONS_SOURCED ]]; then
-  # Prevent zsh-syntax-highlighting and zsh-autosuggestions from being sourced twice
-  # when running "source ~/.zshrc" from the shell.
-  # See https://github.com/zsh-users/zsh-autosuggestions/issues/166
-  [[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
-      source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  [[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
-      source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-  export _ZSHRC_AUTO_SUGGESTIONS_SOURCED=1
-fi
+# Note that zsh-syntax-highlighting and zsh-autosuggestions being sourced
+# twice will crash the terminal, i.e. when running "source ~/.zshrc" from the shell.
+# See https://github.com/zsh-users/zsh-autosuggestions/issues/166
+[[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+export _ZSHRC_AUTO_SUGGESTIONS_SOURCED=1
 
 # FZF completions
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
