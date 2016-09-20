@@ -38,3 +38,6 @@ if [ -e ~/.git-prompt.sh ]; then
   source ~/.git-prompt.sh
 fi
 export PATH=~/development/urbancompass:~/development/urbancompass/scripts:~/scripts:~/bin:${PATH}
+
+# FZF completions
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

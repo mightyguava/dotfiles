@@ -111,3 +111,6 @@ if [[ -z $_ZSHRC_AUTO_SUGGESTIONS_SOURCED ]]; then
       source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
   export _ZSHRC_AUTO_SUGGESTIONS_SOURCED=1
 fi
+
+# FZF completions
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
