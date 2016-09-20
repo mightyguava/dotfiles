@@ -104,3 +104,8 @@ fi
 
 # FZF completions
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH=~/scripts:~/bin:${PATH}
+
+# Source local custom zshrc
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
