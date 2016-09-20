@@ -62,13 +62,22 @@ ${LINK} ${SRC}/common/.profile ${TARGET}/.profile
 ${LINK} ${SRC}/bash/.bashrc ${TARGET}/.bashrc
 ${LINK} ${SRC}/bash/.git-completion.bash ${TARGET}/.git-completion.bash
 
+# VIM stuff
+rm -rf ${TARGET}/.vim
+mkdir -p ${TARGET}/.vim
+mkdir -p ${TARGET}/.vim/autoload
+${LINK} ${SRC}/vim/plug.vim ${TARGET}/.vim/autoload/plug.vim
+${LINK} ${SRC}/vim/.vimrc ${TARGET}/.vimrc
+
 rm -rf ${TARGET}/.zsh
 if [ -z "$COPY" ]; then
   # Initialize submodules if using symlinks
   git submodule init
   git submodule update
-
   ${LINK} ${SRC}/zsh ${TARGET}/.zsh
+
+  # Install vim plugins and quit
+  vim +PlugInstall! +qa! &> /dev/null
 else
   # Copy the non-submodules
   mkdir -p ${TARGET}/.zsh
