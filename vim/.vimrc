@@ -149,6 +149,17 @@ set ttimeoutlen=100
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
 
+" Send more characters for redraws
+set ttyfast
+
+" Enable mouse use in all modes
+set mouse=a
+
+" Set this to the name of your terminal that supports mouse codes.
+" Must be one of: xterm, xterm2, netterm, dec, jsbterm, pterm
+" xterm2 works well with iterm
+set ttymouse=xterm2
+
 " }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -536,3 +547,4 @@ call InitializeDirectories()
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
