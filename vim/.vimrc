@@ -120,6 +120,9 @@ set hlsearch
 " Makes search act like incremental search in modern browsers
 set incsearch
 
+" Disable spellcheck. More obtrusive than I'd like
+set nospell
+
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
