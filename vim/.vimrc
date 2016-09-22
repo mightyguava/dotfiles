@@ -1,4 +1,4 @@
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set sw=2 ts=2 sts=2 et tw=100 foldmarker={,} foldlevel=0 foldmethod=marker spell:
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Install plugins! {
@@ -34,6 +34,11 @@ function! BuildYCM(info)
   endif
 endfunction
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+
+" Snippets (also YCM errors if UltiSnips is not installed if VIM version is
+" <7.4.107... https://github.com/Valloric/YouCompleteMe/issues/2335)
+Plug 'SirVer/ultisnips'             " The snippet engine
+Plug 'honza/vim-snippets'         " The actual snippets
 
 " Add plugins to &runtimepath
 call plug#end()
