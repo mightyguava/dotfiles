@@ -16,8 +16,24 @@ Plug 'vim-scripts/wombat256.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" File browser
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
+
+" Autocomplete
+function! BuildYCM(info)
+  " Post-install hook for YCM
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if executable("cmake") && (a:info.status == 'installed' || a:info.force)
+    " Only attempt to install if cmake is available, since YCM needs it to
+    " compile dependencies
+    !./install.py
+  endif
+endfunction
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " Add plugins to &runtimepath
 call plug#end()

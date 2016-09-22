@@ -64,8 +64,25 @@ ${LINK} ${SRC}/bash/.git-completion.bash ${TARGET}/.git-completion.bash
 ${LINK} ${SRC}/git/.gitconfig ${TARGET}/.gitconfig
 ${LINK} ${SRC}/tmux/.tmux.conf ${TARGET}/.tmux.conf
 
+# Attempt to install cmake if needed for VIM YouCompleteMe plugin
+if [ -z "${NO_INSTALL_CMAKE}" ] && ! type cmake &>/dev/null; then
+  os=$(uname -s)
+  case "$os" in
+    Darwin)
+      type brew &>/dev/null && brew install cmake || echo "Could not install cmake"
+      ;;
+    Linux)
+      echo "Installing cmake for vim YouCompleteMe plugin. Sudo password may be needed"
+      sudo apt-get --assume-yes install cmake || echo "Could not install cmake"
+      ;;
+    *)
+      echo "Unknown OS, don't know how to install cmake"
+      ;;
+  esac
+fi
+
+
 # VIM stuff
-rm -rf ${TARGET}/.vim
 mkdir -p ${TARGET}/.vim
 mkdir -p ${TARGET}/.vim/autoload
 ${LINK} ${SRC}/vim/plug.vim ${TARGET}/.vim/autoload/plug.vim
@@ -78,8 +95,8 @@ if [ -z "$COPY" ]; then
   git submodule update
   ${LINK} ${SRC}/zsh ${TARGET}/.zsh
 
-  # Install vim plugins and quit
-  vim +PlugInstall! +qa! &> /dev/null
+  # Install vim plugins, clean, and quit
+  vim +PlugInstall +PlugClean +qa!
 else
   # Copy the non-submodules
   mkdir -p ${TARGET}/.zsh
