@@ -20,6 +20,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 
+" Syntax checker
+Plug 'scrooloose/syntastic'
+
 " Autocomplete
 function! BuildYCM(info)
   " Post-install hook for YCM
@@ -471,6 +474,10 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " }
 
+" Syntastic {
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_loc_list_height = 3
 " }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
