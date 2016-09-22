@@ -1,4 +1,4 @@
-" vim: set sw=2 ts=2 sts=2 et tw=100 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set sw=2 ts=2 sts=2 et tw=100 foldmarker={,} foldlevel=0 foldmethod=marker :
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Install plugins! {
@@ -37,6 +37,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " Snippets (also YCM errors if UltiSnips is not installed if VIM version is
 " <7.4.107... https://github.com/Valloric/YouCompleteMe/issues/2335)
+Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'             " The snippet engine
 Plug 'honza/vim-snippets'         " The actual snippets
 
@@ -419,7 +420,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FZF
+" FZF {
 " Search through files within git repo
 map <C-p> :GFiles<cr>
 map <leader>fg :GFiles<cr>
@@ -436,8 +437,9 @@ map <leader>ag :Ag<Space>
 map <leader>fl :Lines<Space>
 " Search commits
 map <leader>fc :Commits
+" }
 
-" NERDTree
+" NERDTree {
 if isdirectory(expand("~/.vim/plugged/nerdtree"))
   map <C-e> <plug>NERDTreeTabsToggle<CR>
   map <leader>e :NERDTreeFind<CR>
@@ -451,6 +453,23 @@ if isdirectory(expand("~/.vim/plugged/nerdtree"))
   let NERDTreeShowHidden=1
   let g:nerdtree_tabs_open_on_gui_startup=0
 endif
+" }
+
+" YouCompleteMe, UltiSnips, and SuperTab {
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+" Bind YCM to <C-n>
+let g:ycm_key_list_select_completion = ['<C-n>', '<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<C-k>', '<Up>']
+
+" Let SuperTab translate <tab> to <C-n> for completions, otherwise goes to UltiSnips
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" Nice UltiSnips bindings
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" }
 
 " }
 
