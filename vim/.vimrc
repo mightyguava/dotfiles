@@ -49,7 +49,6 @@ set history=1000
 
 " Enable filetype plugins
 filetype plugin on
-filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -62,15 +61,6 @@ let g:mapleader = ","
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
-
-" Set up clipboard
-if has('clipboard')
-    if has('unnamedplus')  " When possible use + register for copy-paste
-        set clipboard=unnamed,unnamedplus
-    else         " On mac and Windows, use * register for copy-paste
-        set clipboard=unnamed
-    endif
-endif
 " }
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface {
@@ -234,7 +224,7 @@ set smartindent
 set nowrap
 
 " Remove trailing whitespaces and ^M chars
-autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,vim autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+autocmd FileType * autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
 
 " }
