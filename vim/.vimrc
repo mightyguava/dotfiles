@@ -1,7 +1,7 @@
-" vim: set sw=2 ts=2 sts=2 et tw=100 foldmarker={,} foldlevel=0 foldmethod=marker :
+" vim: set sw=2 ts=2 sts=2 et tw=100 foldmarker={{,}} foldlevel=0 foldmethod=marker :
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Install plugins! {
+" => Install plugins! {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
@@ -46,10 +46,10 @@ Plug 'honza/vim-snippets'         " The actual snippets
 
 " Add plugins to &runtimepath
 call plug#end()
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Identify Platform {
+" => Identify Platform {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 silent function! OSX()
     return has('macunix')
@@ -61,10 +61,10 @@ silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
 
-"}
+"}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General {
+" => General {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Make vim better, in general
 set nocompatible
@@ -86,9 +86,10 @@ let g:mapleader = ","
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
-" }
+" }}
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface {
+" => VIM user interface {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
@@ -178,10 +179,10 @@ set mouse=a
 " xterm2 works well with iterm
 set ttymouse=xterm2
 
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts {
+" => Colors and Fonts {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
@@ -206,10 +207,10 @@ set ffs=unix,dos,mac
 " show right margin at 101 characters
 set colorcolumn=101
 
-" }
-"
+" }}
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo {
+" => Files, backups and undo {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
@@ -219,10 +220,10 @@ if has('persistent_undo')
     set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 endif
 
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab, space, wrap and indent related {
+" => Text, tab, space, wrap and indent related {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
@@ -252,10 +253,10 @@ set nowrap
 autocmd FileType * autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
 
-" }
+" }}
 
 """"""""""""""""""""""""""""""
-" => Visual mode related {
+" => Visual mode related {{
 """"""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
@@ -270,10 +271,10 @@ vnoremap > >gv
 " http://stackoverflow.com/a/8064607/127816
 vnoremap . :normal .<CR>
 
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers {
+" => Moving around, tabs, windows and buffers {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Disable highlight when <leader>/ is pressed
 map <silent> <leader>/ :noh<cr>
@@ -319,10 +320,10 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" }
+" }}
 
 """"""""""""""""""""""""""""""
-" => Code folding {
+" => Code folding {{
 """"""""""""""""""""""""""""""
 set foldenable                  " Auto fold code
 nmap <leader>f0 :set foldlevel=0<CR>
@@ -336,10 +337,10 @@ nmap <leader>f7 :set foldlevel=7<CR>
 nmap <leader>f8 :set foldlevel=8<CR>
 nmap <leader>f9 :set foldlevel=9<CR>
 
-" }
+" }}
 
 """"""""""""""""""""""""""""""
-" => Status line {
+" => Status line {{
 """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
@@ -347,10 +348,10 @@ set laststatus=2
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings {
+" => Editing mappings {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Replace word under cursor
 nmap <leader>s :%s/\<<C-r><C-w>\>//<Left>
@@ -370,10 +371,10 @@ if has("mac") || has("macunix")
   vmap <D-k> <M-k>
 endif
 
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc {
+" => Misc {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
@@ -391,10 +392,10 @@ map <leader>pp :setlocal paste!<cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => GUI Settings {
+" => GUI Settings {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -418,10 +419,10 @@ else
   endif
 endif
 
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins {
+" => Plugins {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FZF {
 " Search through files within git repo
@@ -440,9 +441,94 @@ map <leader>ag :Ag<Space>
 map <leader>fl :Lines<Space>
 " Search commits
 map <leader>fc :Commits
-" }
+" Search with Codesearch (https://github.com/google/codesearch)
+map <leader>cs :CSearch<Space>
+map <leader>ch :CSearchCwd<Space>
+" Trigger an index
+map :CIndex :!cindex
 
-" NERDTree {
+" Implementation of fzf code search command {{
+
+	" The options below do a few things:
+  " 1. Sets delimiter for each searched line to : and prioritizes text match (3..) for narrowing
+  "    results.
+  " 2. Enables Ctrl-X (split), Ctrl-V (vsplit), Ctrl-T(tabedit)
+  " 3. Enables multiselect with <Tab> and deselect with <Shift tab>
+  " 4. Ctrl-A to select all, Ctrl-D to deselect all
+  " 5. Creates a Cs> prompt at the bottom
+  " 6. Ensures fzf opens in full screen (<bang>0)
+  if executable('csearch_rel')
+    " Use my custom csearch wrapper that changes paths to relative paths if available.
+    let csearch = 'csearch_rel'
+  else
+    let csearch = 'csearch'
+  endif
+  " Search everything in the index
+	command! -bang -nargs=* CSearch call fzf#run(fzf#wrap({
+		\ 'source': csearch . ' -n -i <q-args>',
+		\ 'sink*': function('<sid>csearch_handler'),
+		\ 'options': '--delimiter : --nth 3..,.. --prompt "Cs> " '.
+		\            '--multi --bind ctrl-a:select-all,alt-n:deselect-all '
+		\ }), <bang>0)
+
+  " Search only files under cwd
+	command! -bang -nargs=* CSearchCwd call fzf#run(fzf#wrap({
+		\ 'source': csearch . ' -f ' . getcwd() . ' -n -i <q-args>',
+		\ 'sink*': function('<sid>csearch_handler'),
+		\ 'options': ' --delimiter : --nth 3..,.. '.
+    \            ' --prompt "Cs> "'.shellescape(pathshorten(getcwd())).'/'.
+		\            ' --multi --bind ctrl-a:select-all,alt-n:deselect-all '
+		\ }), <bang>0)
+
+	function! s:csearch_handler(lines)
+		if len(a:lines) < 1
+			return
+		endif
+
+    " Input is a list of lines selected from csearch output, of format "filename:line:linetext"
+		let list = map(a:lines, 's:cs_to_qf(v:val)')
+		let first = list[0]
+
+		" Do not do anything if the file picked is the current file
+		if fnamemodify(first.filename, ':p') ==# expand('%:p')
+			return
+		endif
+
+		try
+			" Open the picked file for editing
+			execute 'edit' s:escape(first.filename)
+			" Go to the matched line
+			execute first.lnum
+		catch
+		endtry
+
+    " Put all of the files in the quickfix list if there is more than 1 selected file
+    if len(list) > 1
+      call setqflist(list)
+      copen
+      wincmd p
+    endif
+	endfunction
+
+	function! s:cs_to_qf(line)
+		" Convert code search result to quick fix list (:help setqflist) entries
+		let parts = split(a:line, ':')
+		return {
+		\  'filename': parts[0],
+		\  'lnum': parts[1],
+    \  'col': 0,
+		\  'text': join(parts[2:], ':')
+		\ }
+	endfunction
+
+	function! s:escape(path)
+		" Escape special characters in the path for use by the edit command
+		return escape(a:path, ' $%#''"\')
+	endfunction
+"   }}
+" }}
+
+" NERDTree {{
 if isdirectory(expand("~/.vim/plugged/nerdtree"))
   map <C-e> <plug>NERDTreeTabsToggle<CR>
   map <leader>e :NERDTreeFind<CR>
@@ -456,9 +542,9 @@ if isdirectory(expand("~/.vim/plugged/nerdtree"))
   let NERDTreeShowHidden=1
   let g:nerdtree_tabs_open_on_gui_startup=0
 endif
-" }
+" }}
 
-" YouCompleteMe, UltiSnips, and SuperTab {
+" YouCompleteMe, UltiSnips, and SuperTab {{
 let g:ycm_autoclose_preview_window_after_completion = 1
 
 " Bind YCM to <C-n>
@@ -472,16 +558,17 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-" }
+" }}
 
-" Syntastic {
+" Syntastic {{
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_java_checkers = []
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_loc_list_height = 3
-" }
+" }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions {
+" => Helper functions {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
@@ -581,7 +668,7 @@ function! InitializeDirectories()
 endfunction
 call InitializeDirectories()
 
-" }
+" }}
 
 " Use local vimrc if available
 if filereadable(expand("~/.vimrc.local"))

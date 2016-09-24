@@ -1,0 +1,16 @@
+cwd=`pwd`
+to_trim=${cwd//\//\\/}\\/
+#csearch "$@" | sed "s/${to_trim}//"
+csearch "$@" | python -c "
+import fileinput;
+import os.path;
+import sys;
+
+try:
+  for line in fileinput.input():
+    parts = line.split(':', 1)
+    file = os.path.relpath(parts[0])
+    sys.stdout.write(':'.join([file] + parts[1:]))
+except:
+ pass
+"

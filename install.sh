@@ -97,6 +97,10 @@ if [ -z "$COPY" ]; then
 
   # Install vim plugins, clean, and quit
   vim +PlugInstall +PlugClean +qa!
+
+  # Link binaries, not part of copy
+  mkdir -p ${TARGET}/bin
+  ${LINK} ${SRC}/bin/csearch_rel ${TARGET}/bin/csearch_rel
 else
   # Copy the non-submodules
   mkdir -p ${TARGET}/.zsh
