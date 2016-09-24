@@ -40,7 +40,7 @@ if [ -z "${BASH_SOURCE[0]}" ]; then
   # Eval'ed into bash, not run as script. Check for repo at ~/.dotfiles or
   # bootstrap.
   if [ ! -d "${BOOTSTRAP_DIR}" ]; then
-    git clone git@github.com:mightyguava/dotfiles.git ${HOME}/.dotfiles
+    git clone https://github.com/mightyguava/dotfiles.git ${HOME}/.dotfiles
     cd "${BOOTSTRAP_DIR}"
   else
     cd "${BOOTSTRAP_DIR}"
