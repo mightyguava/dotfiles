@@ -188,15 +188,15 @@ set ttymouse=xterm2
 syntax enable
 
 try
-    if &term == 'xterm' || &term == 'xterm256' || &term == 'screen'
+    if &term == 'xterm-256color' || &term == 'screen-256color'
         colorscheme wombat256mod
+        set background=light
     else
         colorscheme wombat
+        set background=dark
     endif
 catch
 endtry
-
-set background=dark
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
