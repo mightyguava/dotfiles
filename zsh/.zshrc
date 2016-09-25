@@ -28,6 +28,7 @@ HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=100000
 setopt appendhistory autocd nomatch
+setopt share_history # Read/write from the history file immediately.
 
 # Enable vim bindings and lower ESC timeout to 0.1s
 bindkey -v
