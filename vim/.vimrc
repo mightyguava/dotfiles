@@ -317,6 +317,8 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
+" Switch CWD to the GITROOT of the open buffer
+map <leader>gcd :execute 'cd' fugitive#repo().tree()<cr>
 
 " Specify the behavior when switching between buffers
 try
