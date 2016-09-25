@@ -83,9 +83,10 @@ fi
 
 
 # VIM stuff
-mkdir -p ${TARGET}/.vim
 mkdir -p ${TARGET}/.vim/autoload
 ${LINK} ${SRC}/vim/plug.vim ${TARGET}/.vim/autoload/plug.vim
+mkdir -p ${TARGET}/.vim/after/ftplugin
+${LINK} ${SRC}/vim/after/ftplugin/python.vim ${TARGET}/.vim/after/ftplugin/python.vim
 ${LINK} ${SRC}/vim/.vimrc ${TARGET}/.vimrc
 
 rm -rf ${TARGET}/.zsh
