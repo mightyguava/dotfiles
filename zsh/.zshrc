@@ -34,6 +34,10 @@ setopt share_history # Read/write from the history file immediately.
 bindkey -v
 export KEYTIMEOUT=1
 
+export EDITOR=vim
+export LESS=giMR
+export PAGER=less
+
 # Configure key bindings
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward
