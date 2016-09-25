@@ -23,6 +23,9 @@ Plug 'jistr/vim-nerdtree-tabs'
 " Syntax checker
 Plug 'scrooloose/syntastic'
 
+" Golang plugin
+Plug 'fatih/vim-go'
+
 " Autocomplete
 function! BuildYCM(info)
   " Post-install hook for YCM
@@ -31,9 +34,13 @@ function! BuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if executable("cmake") && (a:info.status == 'installed' || a:info.force)
+    let opts = ''
+    if executable("gocode")
+      let opts .= ' --gocode-completer'
+    endif
     " Only attempt to install if cmake is available, since YCM needs it to
     " compile dependencies
-    !./install.py
+    execute '!./install.py' . opts
   endif
 endfunction
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
@@ -237,6 +244,8 @@ set tabstop=2
 " Let backspace delete indent
 set softtabstop=2
 
+filetype indent on
+
 " Linebreak on 500 characters
 set linebreak
 set textwidth=100
@@ -250,8 +259,7 @@ set smartindent
 set nowrap
 
 " Remove trailing whitespaces and ^M chars
-autocmd FileType * autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
+autocmd FileType c,cpp,css,git,html,java,javascript,json,markdown,python,sh,zsh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 
 " }}
 
@@ -565,6 +573,23 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_java_checkers = []
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_loc_list_height = 3
+" Make sure syntastic does not conflict with fatih/vim-go
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+" }}
+
+" Vim-Go {{
+" Use quickfix instead of loclist to not conflict with synastic
+let g:go_list_type = "quickfix"
+" Enable lots of syntax highlighting
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+" Use goimports to format code
+let g:go_fmt_command = "goimports"
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
