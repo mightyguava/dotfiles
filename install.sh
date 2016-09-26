@@ -82,12 +82,22 @@ if [ -z "${NO_INSTALL_CMAKE}" ] && ! type cmake &>/dev/null; then
 fi
 
 
+if type nvim > /dev/null && [ -z "${COPY}" ]; then
+  vim_cmd="nvim"
+else
+  vim_cmd="vim"
+fi
+
 # VIM stuff
 mkdir -p ${TARGET}/.vim/autoload
 ${LINK} ${SRC}/vim/plug.vim ${TARGET}/.vim/autoload/plug.vim
 mkdir -p ${TARGET}/.vim/after/ftplugin
 ${LINK} ${SRC}/vim/after/ftplugin/python.vim ${TARGET}/.vim/after/ftplugin/python.vim
 ${LINK} ${SRC}/vim/.vimrc ${TARGET}/.vimrc
+# Share vim config with neovim
+mkdir -p ${TARGET}/.config/nvim
+${LINK} ${TARGET}/.vim ${TARGET}/.config/nvim
+${LINK} ${SRC}/vim/.vimrc ${TARGET}/.config/nvim/init.vim
 
 rm -rf ${TARGET}/.zsh
 if [ -z "$COPY" ]; then
@@ -97,7 +107,7 @@ if [ -z "$COPY" ]; then
   ${LINK} ${SRC}/zsh ${TARGET}/.zsh
 
   # Install vim plugins, clean, and quit
-  vim +PlugInstall +PlugClean +qa!
+  ${vim_cmd} +PlugInstall +PlugClean +qa!
 
   # Link binaries, not part of copy
   mkdir -p ${TARGET}/bin

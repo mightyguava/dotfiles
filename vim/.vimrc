@@ -185,7 +185,10 @@ set mouse=a
 " Set this to the name of your terminal that supports mouse codes.
 " Must be one of: xterm, xterm2, netterm, dec, jsbterm, pterm
 " xterm2 works well with iterm
-set ttymouse=xterm2
+" Not supported by neovim (and probably not needed)
+if &term != 'nvim'
+  set ttymouse=xterm2
+endif
 
 " }}
 
@@ -196,7 +199,7 @@ set ttymouse=xterm2
 syntax enable
 
 try
-    if &term == 'xterm-256color' || &term == 'screen-256color'
+    if &term == 'nvim' || &term == 'xterm-256color' || &term == 'screen-256color'
         colorscheme wombat256mod
         set background=light
     else

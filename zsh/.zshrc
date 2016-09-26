@@ -34,7 +34,11 @@ setopt share_history # Read/write from the history file immediately.
 bindkey -v
 export KEYTIMEOUT=1
 
-export EDITOR=vim
+if type nvim >/dev/null; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
 export LESS=giMR
 export PAGER=less
 
