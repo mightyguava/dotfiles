@@ -82,7 +82,7 @@ if [ -z "${NO_INSTALL_CMAKE}" ] && ! type cmake &>/dev/null; then
 fi
 
 
-if type nvim > /dev/null && [ -z "${COPY}" ]; then
+if type nvim &> /dev/null && [ -z "${COPY}" ]; then
   vim_cmd="nvim"
 else
   vim_cmd="vim"
