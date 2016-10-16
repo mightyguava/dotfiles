@@ -372,7 +372,7 @@ nmap <leader>f9 :set foldlevel=9<CR>
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ CWD:%r%{pathshorten(fnamemodify(getcwd(),\":~\"))}%h\ \ L:%l,C:%c
 
 " }}
 
@@ -558,7 +558,6 @@ map :CIndex :!cindex
 if isdirectory(expand("~/.vim/plugged/nerdtree"))
   map <C-e> <plug>NERDTreeTabsToggle<CR>
   map <leader>e :NERDTreeFind<CR>
-  nmap <leader>nt :NERDTreeFind<CR>
 
   let NERDTreeShowBookmarks=1
   let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
@@ -589,11 +588,18 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " Syntastic {{
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_java_checkers = []
+let g:syntastic_javascript_checkers = ['eslint']
+" Make the loc list auto-show when there are errors, hide when there are not
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_loc_list_height = 3
 " Make sure syntastic does not conflict with fatih/vim-go
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
+" Add to the status line? Not sure if I like the effect.
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 " }}
 
 " Vim-Go {{
