@@ -1,6 +1,21 @@
 " vim: set sw=2 ts=2 sts=2 et tw=100 foldmarker={{,}} foldlevel=0 foldmethod=marker :
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Identify Platform {{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+silent function! OSX()
+    return has('macunix')
+endfunction
+silent function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+silent function! WINDOWS()
+    return  (has('win32') || has('win64'))
+endfunction
+
+"}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Install plugins! {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
@@ -19,6 +34,11 @@ Plug 'junegunn/fzf.vim'
 " File browser
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
+
+" Dash integration
+if OSX()
+  Plug 'rizzatti/dash.vim'
+endif
 
 " Syntax checker
 Plug 'scrooloose/syntastic'
@@ -55,21 +75,6 @@ Plug 'honza/vim-snippets'         " The actual snippets
 " Add plugins to &runtimepath
 call plug#end()
 " }}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Identify Platform {{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-silent function! OSX()
-    return has('macunix')
-endfunction
-silent function! LINUX()
-    return has('unix') && !has('macunix') && !has('win32unix')
-endfunction
-silent function! WINDOWS()
-    return  (has('win32') || has('win64'))
-endfunction
-
-"}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General {{
@@ -597,6 +602,11 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 " Use goimports to format code
 let g:go_fmt_command = "goimports"
+" }}
+
+" Dash {{
+map <silent> <leader>d <Plug>DashSearch
+map <silent> <leader>gd <Plug>DashGlobalSearch
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
