@@ -27,6 +27,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/Wombat'
 Plug 'vim-scripts/wombat256.vim'
 
+" Whitespace highlighting
+Plug 'ntpeters/vim-better-whitespace'
+
 " Fzf fuzzy file matcher
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -166,8 +169,6 @@ set mat=2
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
 
-set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
@@ -264,12 +265,12 @@ set textwidth=100
 set nojoinspaces
 
 set autoindent
-set smartindent
+set cindent
 " Enable soft wrap
 set nowrap
 
-" Remove trailing whitespaces and ^M chars
-autocmd FileType c,cpp,css,git,html,java,javascript,json,markdown,python,sh,zsh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+" Remove trailing whitespaces
+autocmd BufWritePre * StripWhitespace
 
 " }}
 
