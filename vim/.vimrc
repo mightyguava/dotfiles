@@ -187,11 +187,11 @@ set ttyfast
 " Enable mouse use in all modes
 set mouse=a
 
-" Set this to the name of your terminal that supports mouse codes.
-" Must be one of: xterm, xterm2, netterm, dec, jsbterm, pterm
-" xterm2 works well with iterm
-" Not supported by neovim (and probably not needed)
-if &term != 'nvim'
+if !has("nvim")
+  " Set this to the name of your terminal that supports mouse codes.
+  " Must be one of: xterm, xterm2, netterm, dec, jsbterm, pterm
+  " xterm2 works well with iterm
+  " Not supported by neovim (and probably not needed)
   set ttymouse=xterm2
 endif
 
@@ -306,6 +306,12 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+if has("nvim")
+  tnoremap <C-w>h <C-\><C-n><C-w>h
+  tnoremap <C-w>j <C-\><C-n><C-w>j
+  tnoremap <C-w>k <C-\><C-n><C-w>k
+  tnoremap <C-w>l <C-\><C-n><C-w>l
+endif
 
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
