@@ -1,5 +1,5 @@
 [alias]
-  amend = commit --amend
+  amend = commit --amend --no-edit
   br = branch
   co = checkout
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
