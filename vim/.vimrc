@@ -495,6 +495,7 @@ map :CIndex :!cindex
 		\ 'source': csearch . ' -n -i <q-args>',
 		\ 'sink*': function('<sid>csearch_handler'),
 		\ 'options': '--delimiter : --nth 3..,.. --prompt "Cs> " '.
+    \            '--expect=ctrl-t,ctrl-v,ctrl-x '.
 		\            '--multi --bind ctrl-a:select-all,alt-n:deselect-all '
 		\ }), <bang>0)
 
@@ -503,17 +504,22 @@ map :CIndex :!cindex
 		\ 'source': csearch . ' -f ' . getcwd() . ' -n -i <q-args>',
 		\ 'sink*': function('<sid>csearch_handler'),
 		\ 'options': ' --delimiter : --nth 3..,.. '.
+    \            '--expect=ctrl-t,ctrl-v,ctrl-x '.
     \            ' --prompt "Cs> "'.shellescape(pathshorten(getcwd())).'/'.
 		\            ' --multi --bind ctrl-a:select-all,alt-n:deselect-all '
 		\ }), <bang>0)
 
 	function! s:csearch_handler(lines)
-		if len(a:lines) < 1
+		if len(a:lines) < 2
 			return
 		endif
 
+    let cmd = get({'ctrl-x': 'split',
+                 \ 'ctrl-v': 'vertical split',
+                 \ 'ctrl-t': 'tabe'}, a:lines[0], 'edit')
+
     " Input is a list of lines selected from csearch output, of format "filename:line:linetext"
-		let list = map(a:lines, 's:cs_to_qf(v:val)')
+		let list = map(a:lines[1:], 's:cs_to_qf(v:val)')
 		let first = list[0]
 
 		" Do not do anything if the file picked is the current file
@@ -523,7 +529,7 @@ map :CIndex :!cindex
 
 		try
 			" Open the picked file for editing
-			execute 'edit' s:escape(first.filename)
+			execute cmd s:escape(first.filename)
 			" Go to the matched line
 			execute first.lnum
 		catch
