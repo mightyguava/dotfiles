@@ -62,18 +62,6 @@ then
   source ~/.aliases
 fi
 
-if ! which ec2metadata > /dev/null; then
-  # Local mac
-  export CREDENTIALS_FILE=${HOME}/credentials
-else
-  # EC2
-  export CREDENTIALS_FILE=/etc/credentials
-  if [[ -o login ]]; then
-    eval `ssh-agent`
-    ssh-add ~/.ssh/id_rsa
-  fi
-fi
-
 if [[ -e ~/.git-prompt.sh ]]; then
   source ~/.git-prompt.sh
 fi
