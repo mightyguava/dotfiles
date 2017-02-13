@@ -355,6 +355,8 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+
+
 " }}
 
 """"""""""""""""""""""""""""""
@@ -598,6 +600,11 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+" Remap some keys to use YCM's code navigation commands
+nnoremap gd :YcmCompleter GoTo<CR>
+nnoremap gD :YcmCompleter GetDoc<CR>
+nnoremap gr :YcmCompleter GoToReferences<CR>
 " }}
 
 " Syntastic {{
