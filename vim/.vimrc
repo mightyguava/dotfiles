@@ -326,6 +326,11 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
+" Opens a split terminal
+map :sterm :split term://$SHELL
+map :vterm :vsplit term://$SHELL
+map :tterm :tabnew term://$SHELL
+
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
