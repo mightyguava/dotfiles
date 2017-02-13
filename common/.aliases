@@ -26,3 +26,5 @@ get_tmux_buffer () {
 ucssh () {
   scripts/fab discovery.ssh:"${1}"
 }
+
+alias g="source ~/bin/switch_paths"

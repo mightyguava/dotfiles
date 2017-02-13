@@ -1,0 +1,3 @@
+#compdef switch_paths
+
+_alternative "repos:code repositories:($(switch_paths))"

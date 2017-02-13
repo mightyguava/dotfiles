@@ -112,6 +112,7 @@ if [ -z "$COPY" ]; then
   # Link binaries, not part of copy
   mkdir -p ${TARGET}/bin
   ${LINK} ${SRC}/bin/csearch_rel ${TARGET}/bin/csearch_rel
+  ${LINK} ${SRC}/bin/switch_paths ${TARGET}/bin/switch_paths
 else
   # Copy the non-submodules
   mkdir -p ${TARGET}/.zsh
