@@ -254,6 +254,9 @@ set shiftwidth=2
 set tabstop=2
 " Let backspace delete indent
 set softtabstop=2
+" Show tabs as arrows
+set list
+set listchars=tab:>-
 
 filetype indent on
 
