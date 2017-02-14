@@ -1,6 +1,6 @@
-__switch_paths_get_path() {
+__switch_repos_get_path() {
   local repo_name="$1"
-  local repos_root="/Users/yunchi/dev/src"
+  local repos_root="${GOPATH:-/Users/yunchi/dev}/src"
 
   if [ -z "${repo_name}" ]; then
     find "${repos_root}" -type d -depth 3 -exec basename {} +
@@ -10,13 +10,13 @@ __switch_paths_get_path() {
 }
 
 if [ -z "$1" ]; then
-  __switch_paths_get_path
+  __switch_repos_get_path
   exit
 fi
 
-__switch_paths_repo_path="$(__switch_paths_get_path $1)"
-if [ -z "${__switch_paths_repo_path}" ]; then
+__switch_repos_repo_path="$(__switch_repos_get_path $1)"
+if [ -z "${__switch_repos_repo_path}" ]; then
   echo "No such repo: \"$1\""
 else
-  cd "${__switch_paths_repo_path}"
+  cd "${__switch_repos_repo_path}"
 fi

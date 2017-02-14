@@ -27,4 +27,4 @@ ucssh () {
   scripts/fab discovery.ssh:"${1}"
 }
 
-alias g="source ~/bin/switch_paths"
+alias g="source ~/bin/switch_repos"
