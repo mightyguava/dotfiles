@@ -102,6 +102,13 @@ let g:mapleader = ","
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
+
+" Point neovim to global python installation so that the Python neovim
+" package doesn't have to get installed into every virtualenv
+if OSX()
+  let g:python_host_prog = '/usr/local/bin/python'
+  let g:python3_host_prog = '/usr/local/bin/python3'
+endif
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
