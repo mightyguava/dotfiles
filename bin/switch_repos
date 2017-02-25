@@ -8,6 +8,16 @@ __switch_repos() {
     return
   fi
 
+  if [ "${repo_name}" == "." ]; then
+    local repo_root=$(git rev-parse --show-toplevel 2>&1)
+    if [[ "${repo_root}" == fatal:* ]]; then
+      echo "Could not find repo root. Are you in a git repo?"
+    else
+      cd "${repo_root}"
+    fi
+    return
+  fi
+
   # If repo name is given, find full path to repo
   local repo_path=`find "${repos_root}" -type d -depth 3 -name "${repo_name}" | head -n 1`
   if [ -z "${repo_path}" ]; then
