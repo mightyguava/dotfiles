@@ -38,6 +38,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 
+" Sessions
+Plug 'xolox/vim-session'
+Plug 'xolox/vim-misc' " Dependency of vim-session
+
 " Dash integration
 if OSX()
   Plug 'rizzatti/dash.vim'
@@ -648,6 +652,11 @@ let g:go_fmt_command = "goimports"
 " Dash {{
 map <silent> <leader>d <Plug>DashSearch
 map <silent> <leader>gd <Plug>DashGlobalSearch
+" }}
+
+" Sessions {{
+let g:session_autoload = 'no'
+let g:session_autosave = 'yes'
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
