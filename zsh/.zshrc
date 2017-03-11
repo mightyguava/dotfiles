@@ -104,3 +104,5 @@ export PATH=~/scripts:~/bin:${PATH}
 
 # Source local custom zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
