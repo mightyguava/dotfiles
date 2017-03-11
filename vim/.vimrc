@@ -54,6 +54,9 @@ Plug 'scrooloose/syntastic'
 " Golang plugin
 Plug 'fatih/vim-go'
 
+" Javascript syntax highlighting and indentation
+Plug 'pangloss/vim-javascript'
+
 " Autocomplete
 function! BuildYCM(info)
   " Post-install hook for YCM
@@ -64,8 +67,11 @@ function! BuildYCM(info)
   if !empty($NO_INSTALL_YCM) | return | endif
   if executable("cmake") && (a:info.status == 'installed' || a:info.force)
     let opts = ''
-    if executable("gocode")
+    if executable("go")
       let opts .= ' --gocode-completer'
+    endif
+    if executable("npm")
+      let opts .= ' --tern-completer'
     endif
     " Only attempt to install if cmake is available, since YCM needs it to
     " compile dependencies
