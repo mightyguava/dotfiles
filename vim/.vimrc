@@ -22,6 +22,7 @@ call plug#begin('~/.vim/plugged')
 
 " Git wrapper
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Wombat theme
 Plug 'vim-scripts/Wombat'
