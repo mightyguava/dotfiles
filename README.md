@@ -6,6 +6,13 @@
 
 The repo is bootstrapped to `$HOME/.dotfiles`.
 
+To disable slow YCM and cmake install for VIM, first run
+
+```
+export NO_INSTALL_CMAKE=1
+export NO_INSTALL_YCM=1
+```
+
 ### Option 2 - Check out repo and then run install
 
 ```

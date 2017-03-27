@@ -95,6 +95,7 @@ mkdir -p ${TARGET}/.vim/after/ftplugin
 ${LINK} ${SRC}/vim/after/ftplugin/python.vim ${TARGET}/.vim/after/ftplugin/python.vim
 ${LINK} ${SRC}/vim/.vimrc ${TARGET}/.vimrc
 # Share vim config with neovim
+mkdir -p ${TARGET}/.config
 rm -rf ${TARGET}/.config/nvim
 ${LINK} ${TARGET}/.vim ${TARGET}/.config/nvim
 ${LINK} ${SRC}/vim/.vimrc ${TARGET}/.config/nvim/init.vim
