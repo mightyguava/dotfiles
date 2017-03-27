@@ -56,6 +56,9 @@ Plug 'fatih/vim-go'
 
 " Javascript syntax highlighting and indentation
 Plug 'pangloss/vim-javascript'
+" Prefer local eslint so that it can use local eslint plugins
+" Don't want to install eslint plugins globally
+Plug 'mtscout6/syntastic-local-eslint.vim'
 
 " Autocomplete
 function! BuildYCM(info)
