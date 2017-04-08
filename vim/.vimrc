@@ -159,7 +159,7 @@ set wildignore=*.o,*~,*.pyc,*.class
 if has("win16") || has("win32")
     set wildignore+=.git\*,.hg\*,.svn\*
 else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+    " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store " Seems like setting wildignore interferes with fugitive :Gdiff command when doing 3-way merge.
 endif
 
 " Always show current position
