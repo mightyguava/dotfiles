@@ -24,6 +24,22 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+" Abolish - case/abbrev preserving substitution, snake/camel coersion
+Plug 'tpope/vim-abolish'
+
+" In-file navigation
+Plug 'easymotion/vim-easymotion'
+" Multiple cursors with <C-n>
+Plug 'terryma/vim-multiple-cursors'
+
+" Automatic closing of quotes, parenthesis, braces
+Plug 'Raimondi/delimitMate'
+" Changing braces with cs
+Plug 'tpope/vim-surround'
+
+" Edit in quickfix list
+Plug 'Olical/vim-enmasse'
+
 " Wombat theme
 Plug 'vim-scripts/Wombat'
 Plug 'vim-scripts/wombat256.vim'
@@ -669,6 +685,9 @@ let g:session_autoload = 'no'
 let g:session_autosave = 'yes'
 " }}
 
+" delimitMate {{
+let delimitMate_expand_cr = 1
+" }}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
