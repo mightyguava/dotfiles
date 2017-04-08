@@ -75,6 +75,8 @@ Plug 'pangloss/vim-javascript'
 " Prefer local eslint so that it can use local eslint plugins
 " Don't want to install eslint plugins globally
 Plug 'mtscout6/syntastic-local-eslint.vim'
+" Facebook flow
+Plug 'flowtype/vim-flow'
 
 " Autocomplete
 function! BuildYCM(info)
@@ -90,7 +92,7 @@ function! BuildYCM(info)
       let opts .= ' --gocode-completer'
     endif
     if executable("npm")
-      let opts .= ' --tern-completer'
+      " let opts .= ' --tern-completer'
     endif
     " Only attempt to install if cmake is available, since YCM needs it to
     " compile dependencies
@@ -688,6 +690,15 @@ let g:session_autosave = 'yes'
 " delimitMate {{
 let delimitMate_expand_cr = 1
 " }}
+
+" Javascript specific {{
+  " Syntax highlighting
+  let g:javascript_plugin_jsdoc = 1
+  let g:javascript_plugin_flow = 1
+  " Flow
+  let g:flow#autoclose = 1
+" }}
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
