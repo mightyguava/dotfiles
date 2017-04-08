@@ -1,5 +1,6 @@
 [alias]
   amend = commit --amend --no-edit
+  fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
   br = branch
   co = checkout
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -17,6 +18,8 @@
 	name = Yunchi Luo
 	email = mightyguava@gmail.com
 [push]
-	default = simple
+	default = current
 [http]
   cookiefile = ~/.gitcookies
+[url "git@github.com:"]
+	insteadOf = https://github.com/
