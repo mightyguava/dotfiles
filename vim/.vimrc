@@ -310,10 +310,6 @@ set autoindent
 set cindent
 " Enable soft wrap
 set nowrap
-
-" Remove trailing whitespaces
-autocmd BufWritePre * StripWhitespace
-
 " }}
 
 """"""""""""""""""""""""""""""
@@ -753,19 +749,6 @@ function! <SID>BufcloseCloseIt()
    if buflisted(l:currentBufNum)
      execute("bdelete! ".l:currentBufNum)
    endif
-endfunction
-
-" Strip whitespace
-function! StripTrailingWhitespace()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " do the business:
-    %s/\s\+$//e
-    " clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
 endfunction
 
 " Initialize directories
