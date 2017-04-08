@@ -20,4 +20,9 @@ get_tmux_buffer () {
   ssh $1 tmux show-buffer -b 0 | pbcopy
 }
 
+docker_rm_all() {
+  docker rmi -f "$(docker images -q)"
+}
+alias docker_rm_qcow="rm ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/Docker.qcow2"
+
 alias g="source ~/bin/switch_repos"
