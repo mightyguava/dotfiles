@@ -270,6 +270,7 @@ set colorcolumn=101
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set autowrite " Save on make, or go build...
 " Setting up the directories {
 set backup                  " Backups are nice ...
 if has('persistent_undo')
@@ -298,6 +299,7 @@ set softtabstop=2
 " Show tabs as arrows
 set list
 set listchars=tab:>-
+" Disable showing tabs for Go files since tabs are the standard
 autocmd FileType go autocmd BufEnter <buffer> set nolist
 
 filetype indent on
@@ -663,8 +665,6 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 " }}
 
 " Vim-Go {{
-" Use quickfix instead of loclist to not conflict with synastic
-let g:go_list_type = "quickfix"
 " Enable lots of syntax highlighting
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -676,6 +676,36 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 " Show type information for word under cursor
 let g:go_auto_type_info = 1
+
+let g:go_term_enabled = 1
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'vetshadow', 'golint', 'gotype']
+
+" Override traditional commands for alternating (test) files
+augroup go
+  autocmd!
+  autocmd Filetype go
+    \  command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+    \| command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+    \| command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+    \| command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+augroup END
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#cmd#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+" Mappings for building, running, and testing Go code
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>T  <Plug>(go-test)
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
 " }}
 
 " Dash {{
