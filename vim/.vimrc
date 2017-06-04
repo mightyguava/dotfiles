@@ -302,6 +302,9 @@ set listchars=tab:>-
 " Disable showing tabs for Go files since tabs are the standard
 autocmd FileType go autocmd BufEnter <buffer> set nolist
 
+" Strip whitespace on save
+autocmd BufEnter * EnableStripWhitespaceOnSave
+
 filetype indent on
 
 " Linebreak on 500 characters
