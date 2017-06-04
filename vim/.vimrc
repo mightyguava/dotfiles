@@ -296,6 +296,7 @@ set softtabstop=2
 " Show tabs as arrows
 set list
 set listchars=tab:>-
+autocmd FileType go autocmd BufEnter <buffer> set nolist
 
 filetype indent on
 
@@ -671,6 +672,8 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 " Use goimports to format code
 let g:go_fmt_command = "goimports"
+" Show type information for word under cursor
+let g:go_auto_type_info = 1
 " }}
 
 " Dash {{

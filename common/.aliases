@@ -20,9 +20,15 @@ get_tmux_buffer () {
   ssh $1 tmux show-buffer -b 0 | pbcopy
 }
 
+docker_rm_containers() {
+  docker rm -f $(docker ps -aq)
+}
 docker_rm_all() {
   docker rmi -f "$(docker images -q)"
 }
 alias docker_rm_qcow="rm ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/Docker.qcow2"
 
 alias g="source ~/bin/switch_repos"
+
+alias ansible_migrate_staging='ansible-playbook -i /etc/ansible/ecs-staging -vvv --extra-vars "version=git-$(git rev-parse --short HEAD)" ansible/migrate.yml'
+alias ansible_migrate_prod='ansible-playbook -i /etc/ansible/ecs-prod -vvv --extra-vars "version=git-$(git rev-parse --short HEAD)" ansible/migrate.yml'

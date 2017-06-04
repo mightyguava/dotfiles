@@ -10,7 +10,7 @@ __switch_repos() {
     return
   fi
 
-  if [ "${repo_name}" == "." ]; then
+  if [ "${repo_name}" = "." ]; then
     local repo_root=$(git rev-parse --show-toplevel 2>&1)
     if [[ "${repo_root}" == fatal:* ]]; then
       echo "Could not find repo root. Are you in a git repo?"
