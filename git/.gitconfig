@@ -12,6 +12,7 @@
   unignore-all = update-index --really-refresh
 [core]
 	excludesfile = ~/.gitignore
+	autocrlf = input
 [diff]
   tool = meld
 [user]
