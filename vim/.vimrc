@@ -77,6 +77,8 @@ Plug 'pangloss/vim-javascript'
 Plug 'mtscout6/syntastic-local-eslint.vim'
 " Facebook flow
 Plug 'flowtype/vim-flow'
+" Format using eslint
+Plug 'ruanyl/vim-fixmyjs'
 
 " Autocomplete
 function! BuildYCM(info)
@@ -696,6 +698,10 @@ let delimitMate_expand_cr = 1
   let g:javascript_plugin_flow = 1
   " Flow
   let g:flow#autoclose = 1
+  " fixmyjs
+  let g:fixmyjs_engine = 'eslint'
+  let g:fixmyjs_use_local = 1
+  autocmd BufWritePre *.js :Fixmyjs
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
