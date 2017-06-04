@@ -370,9 +370,9 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
 " Opens a split terminal
-map :sterm :split term://$SHELL
-map :vterm :vsplit term://$SHELL
-map :tterm :tabnew term://$SHELL
+command Sterm split term://$SHELL
+command Vterm vsplit term://$SHELL
+command Tterm tabnew term://$SHELL
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
