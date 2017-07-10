@@ -518,9 +518,9 @@ map <leader>fb :Buffers<cr>
 " Start an Ag prompt to get a term, and then filter
 map <leader>ag :Ag<Space>
 " Search lines in open buffers
-map <leader>fl :Lines<Space>
+map <leader>fl :Lines<cr>
 " Search commits
-map <leader>fc :Commits
+map <leader>fc :Commits<cr>
 " Search with Codesearch (https://github.com/google/codesearch)
 map <leader>cs :CSearch<Space>
 map <leader>ch :CSearchCwd<Space>
