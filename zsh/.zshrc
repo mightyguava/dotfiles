@@ -25,7 +25,7 @@ promptinit
 
 # Configure history
 HISTFILE=~/.histfile
-HISTSIZE=10000
+HISTSIZE=100000
 SAVEHIST=100000
 setopt appendhistory autocd nomatch
 setopt share_history # Read/write from the history file immediately.
