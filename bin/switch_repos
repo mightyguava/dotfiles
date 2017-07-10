@@ -4,13 +4,13 @@ __switch_repos() {
   local repo_name="$1"
   local repos_root="${GOPATH:-/Users/yunchi/dev}/src"
 
-  if [ -z "${repo_name}" ]; then
-    # If no repo name is given, list all repos
+  if [ "${repo_name}" = "-ls" ]; then
+    # List all repos
     find "${repos_root}"/github.com "${repos_root}"/gitlab.com -type d -depth 2 -maxdepth 2 -exec basename {} +
     return
   fi
 
-  if [ "${repo_name}" = "." ]; then
+  if [ -z "${repo_name}" ]; then
     local repo_root=$(git rev-parse --show-toplevel 2>&1)
     if [[ "${repo_root}" == fatal:* ]]; then
       echo "Could not find repo root. Are you in a git repo?"
