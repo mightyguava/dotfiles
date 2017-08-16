@@ -226,7 +226,7 @@ set tm=500
 set ttimeout
 set ttimeoutlen=100
 
-set splitright                  " Puts new vsplit windows to the right of the current
+" set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
 
 " Send more characters for redraws
