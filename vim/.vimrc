@@ -77,8 +77,14 @@ Plug 'pangloss/vim-javascript'
 Plug 'mtscout6/syntastic-local-eslint.vim'
 " Facebook flow
 Plug 'flowtype/vim-flow'
-" Format using eslint
-Plug 'ruanyl/vim-fixmyjs'
+" Format with prettier/prettier
+Plug 'prettier/vim-prettier', {
+	\ 'do': 'yarn install',
+	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql']
+  \ }
+
+" Prometheus rule format
+Plug 'skreuzer/vim-prometheus'
 
 " Autocomplete
 function! BuildYCM(info)
@@ -719,7 +725,7 @@ augroup END
 function! s:build_go_files()
   let l:file = expand('%')
   if l:file =~# '^\f\+_test\.go$'
-    call go#cmd#Test(0, 1)
+    call go#test#Test(0, 1)
   elseif l:file =~# '^\f\+\.go$'
     call go#cmd#Build(0)
   endif
@@ -752,10 +758,9 @@ let delimitMate_expand_cr = 1
   let g:javascript_plugin_flow = 1
   " Flow
   let g:flow#autoclose = 1
-  " fixmyjs
-  let g:fixmyjs_engine = 'eslint'
-  let g:fixmyjs_use_local = 1
-  autocmd BufWritePre *.js :Fixmyjs
+  " Prettier
+  " let g:prettier#autoformat = 0
+  " autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
