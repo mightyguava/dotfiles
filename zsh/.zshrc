@@ -105,4 +105,8 @@ export PATH=~/scripts:~/bin:${PATH}
 # Source local custom zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
+[ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+true
