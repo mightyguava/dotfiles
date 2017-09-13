@@ -706,6 +706,7 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 " Show type information for word under cursor
 let g:go_auto_type_info = 1
+let g:go_info_mode = 'guru'
 
 let g:go_term_enabled = 1
 let g:go_metalinter_autosave = 1
