@@ -85,6 +85,8 @@ Plug 'prettier/vim-prettier', {
 
 " Prometheus rule format
 Plug 'skreuzer/vim-prometheus'
+" Terraform syntax
+Plug 'hashivim/vim-terraform'
 
 " Autocomplete
 function! BuildYCM(info)
