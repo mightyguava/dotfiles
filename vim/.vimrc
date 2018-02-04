@@ -55,6 +55,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 
+" Tagbar for viewing file ctags
+Plug 'majutsushi/tagbar'
+
 " Sessions
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc' " Dependency of vim-session
@@ -691,13 +694,21 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 " Use goimports to format code
 let g:go_fmt_command = "goimports"
+let g:go_fmt_options = {
+  \ 'gofmt': '-s',
+  \ }
 " Show type information for word under cursor
 let g:go_auto_type_info = 1
 let g:go_info_mode = 'guru'
+let g:go_update_time = 2000
 
-let g:go_term_enabled = 1
+let g:go_term_enabled = 0
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'vetshadow', 'golint', 'gotype']
+
+" Show build/test status info to statusline instead.
+let g:go_echo_command_info = 0
+autocmd FileType go set statusline=%{go#statusline#Show()}\ %{HasPaste()}%F%m%r%h\ %w\ CWD:%r%{pathshorten(fnamemodify(getcwd(),\":~\"))}%h\ \ L:%l,C:%c
 
 " Override traditional commands for alternating (test) files
 augroup go
@@ -724,11 +735,46 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
+
+" Mapping for navigating symbols in the file and package
+autocmd FileType go nmap <leader>d :GoDecls<CR>
+autocmd FileType go nmap <leader>D :GoDeclsDir<CR>
+" }}
+
+" Tag Bar {{
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 " }}
 
 " Dash {{
-map <silent> <leader>d <Plug>DashSearch
-map <silent> <leader>gd <Plug>DashGlobalSearch
+map <silent> <leader><leader>d <Plug>DashSearch
+map <silent> <leader><leader>gd <Plug>DashGlobalSearch
 " }}
 
 " Sessions {{
