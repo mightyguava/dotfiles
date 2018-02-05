@@ -53,7 +53,6 @@ Plug 'junegunn/fzf.vim'
 
 " File browser
 Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
 
 " Tagbar for viewing file ctags
 Plug 'majutsushi/tagbar'
@@ -633,7 +632,7 @@ command! -bang -nargs=? -complete=dir GFiles
 
 " NERDTree {{
 if isdirectory(expand("~/.vim/plugged/nerdtree"))
-  map <C-e> <plug>NERDTreeTabsToggle<CR>
+  map <C-e> :NERDTreeToggle<CR>
   map <leader>e :NERDTreeFind<CR>
 
   let NERDTreeShowBookmarks=1
@@ -705,10 +704,6 @@ let g:go_update_time = 2000
 let g:go_term_enabled = 0
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'vetshadow', 'golint', 'gotype']
-
-" Show build/test status info to statusline instead.
-let g:go_echo_command_info = 0
-autocmd FileType go set statusline=%{go#statusline#Show()}\ %{HasPaste()}%F%m%r%h\ %w\ CWD:%r%{pathshorten(fnamemodify(getcwd(),\":~\"))}%h\ \ L:%l,C:%c
 
 " Override traditional commands for alternating (test) files
 augroup go
