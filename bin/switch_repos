@@ -7,6 +7,9 @@ __switch_repos() {
   if [ "${repo_name}" = "-ls" ]; then
     # List all repos
     find "${repos_root}"/github.com "${repos_root}"/gitlab.com -type d -depth 2 -maxdepth 2 -exec basename {} +
+    if [ -d ~/Projects ]; then
+      find ~/Projects -type d -depth 1 -maxdepth 1 -exec basename {} +
+    fi
     return
   fi
 
@@ -22,6 +25,9 @@ __switch_repos() {
 
   # If repo name is given, find full path to repo
   local repo_path=`find "${repos_root}"/github.com "${repos_root}"/gitlab.com -type d -depth 2 -maxdepth 2  -name "${repo_name}" | head -n 1`
+  if [ -z "${repo_path}" ]; then
+    repo_path=`find ~/Projects -type d -depth 1 -maxdepth 1 -name "${repo_name}" | head -n 1`
+  fi
   if [ -z "${repo_path}" ]; then
     echo "No such repo: \"$1\""
   else
