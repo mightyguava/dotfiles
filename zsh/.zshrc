@@ -99,6 +99,8 @@ export _ZSHRC_AUTO_SUGGESTIONS_SOURCED=1
 
 # FZF completions
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH=~/scripts:~/bin:${PATH}
 
