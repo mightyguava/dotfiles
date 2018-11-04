@@ -4,7 +4,7 @@ if [[ -x /usr/bin/dircolors ]]; then
   alias ls='ls --color=auto'
 fi
 
-alias ll='ls -alFG'
+alias ll='ls -alFGh'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -13,8 +13,10 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 alias gnb='git fetch origin; git checkout origin/master -b'
-alias gr='git rebase -i --autosquash origin/master'
+alias gr='git rebase --autosquash origin/master'
 alias gf='git fetch origin'
+
+alias help=tldr
 
 get_tmux_buffer () {
   ssh $1 tmux show-buffer -b 0 | pbcopy
