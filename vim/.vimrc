@@ -686,21 +686,21 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 " Vim-Go {{
 " Enable lots of syntax highlighting
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
+"let g:go_highlight_functions = 1
+"let g:go_highlight_methods = 1
+"let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
+"let g:go_highlight_build_constraints = 1
 " Use goimports to format code
 let g:go_fmt_command = "goimports"
 let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 " Show type information for word under cursor
-let g:go_auto_type_info = 1
+" let g:go_auto_type_info = 1
 let g:go_info_mode = 'guru'
-let g:go_update_time = 2000
+" let g:go_update_time = 2000
 
 let g:go_term_enabled = 0
 let g:go_metalinter_autosave = 1
@@ -731,6 +731,19 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
+
+" Mappings for viewing info about what's under the cursor
+autocmd FileType go nmap <leader>i  <Plug>(go-info)
+autocmd FileType go nmap <leader>vI  <Plug>(go-implements)
+autocmd FileType go nmap <leader>vd  <Plug>(go-doc)
+autocmd FileType go nmap <leader>vD  <Plug>(go-doc-browser)
+autocmd FileType go nmap <leader>vc  <Plug>(go-callers)
+autocmd FileType go nmap <leader>vC  <Plug>(go-callees)
+autocmd FileType go nmap <leader>vf  <Plug>(go-freevars)
+autocmd FileType go nmap <leader>vp  <Plug>(go-channelpeers)
+
+" Mappings for jumping to relevant context for what's under the cursor
+autocmd FileType go nmap gD  <Plug>(go-def-vertical)
 
 " Mapping for navigating symbols in the file and package
 autocmd FileType go nmap <leader>d :GoDecls<CR>
