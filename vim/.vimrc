@@ -77,13 +77,13 @@ Plug 'pangloss/vim-javascript'
 " Prefer local eslint so that it can use local eslint plugins
 " Don't want to install eslint plugins globally
 Plug 'mtscout6/syntastic-local-eslint.vim'
-" Facebook flow
-Plug 'flowtype/vim-flow'
 " Format with prettier/prettier
 Plug 'prettier/vim-prettier', {
 	\ 'do': 'yarn install',
 	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql']
   \ }
+" Typescript!
+Plug 'leafgarland/typescript-vim'
 
 " Prometheus rule format
 Plug 'skreuzer/vim-prometheus'
@@ -664,6 +664,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 nnoremap gd :YcmCompleter GoTo<CR>
 nnoremap gD :YcmCompleter GetDoc<CR>
 nnoremap gr :YcmCompleter GoToReferences<CR>
+autocmd FileType typescript nnoremap gd :YcmCompleter GoToDefinition<CR>
 " }}
 
 " Syntastic {{
@@ -784,9 +785,6 @@ let delimitMate_expand_cr = 1
 " Javascript specific {{
   " Syntax highlighting
   let g:javascript_plugin_jsdoc = 1
-  let g:javascript_plugin_flow = 1
-  " Flow
-  let g:flow#autoclose = 1
   " Prettier
   " let g:prettier#autoformat = 0
   " autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
