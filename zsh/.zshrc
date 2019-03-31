@@ -13,9 +13,7 @@ zstyle :compinstall filename '~/.zshrc'
 
 # Enable git completions
 zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
-if [[ -f ~/.zsh/.git-completion.zsh ]]; then
-  fpath=(~/.zsh $fpath)
-fi
+fpath=(~/.zsh $fpath)
 
 autoload -Uz compinit
 compinit
