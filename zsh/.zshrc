@@ -109,4 +109,9 @@ export PATH=~/scripts:~/bin:${PATH}
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+[[ -f ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme ]] && \
+  source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
+[[ -f ~/.zsh/purepower ]] && \
+  source ~/.zsh/purepower
+
 true
