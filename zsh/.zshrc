@@ -72,20 +72,6 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 # Use Linux-flavor colors for zsh ls completion
 zstyle ':completion:*:default' list-colors "${LS_COLORS}"
 
-# Configure prompt
-autoload -Uz colors && colors
-setopt PROMPT_SUBST
-PS1='%{$fg_bold[green]%}%n@%{$fg_bold[yellow]%}%m%{$reset_color$fg_bold[magenta]%}$(__git_ps1 " (%s)")%{$reset_color%} %{$fg_bold[blue]%}%~%{$reset_color$fg_bold[red]%}%(?.. [%?] )%{$reset_color%}> '
-
-# Show [NORMAL] in right prompt if in VI command edit mode
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [NORMAL]  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
-
 # Note that zsh-syntax-highlighting and zsh-autosuggestions being sourced
 # twice will crash the terminal, i.e. when running "source ~/.zshrc" from the shell.
 # See https://github.com/zsh-users/zsh-autosuggestions/issues/166
@@ -94,6 +80,20 @@ zle -N zle-keymap-select
 [[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 export _ZSHRC_AUTO_SUGGESTIONS_SOURCED=1
+
+# zsh-autosuggests wraps all widgets on every prompt, which takes ~12 ms.
+# We turn it off after making sure _zsh_autosuggest_start has run at least once.
+autoload -Uz add-zsh-hook
+typeset -gi _UNHOOK_ZSH_AUTOSUGGEST_COUNTER=0
+function _unhook_autosuggest() {
+  emulate -L zsh
+  if (( ++_UNHOOK_ZSH_AUTOSUGGEST_COUNTER == 2 )); then
+    add-zsh-hook -D precmd _zsh_autosuggest_start
+    add-zsh-hook -D precmd _unhook_autosuggest
+    unset _UNHOOK_ZSH_AUTOSUGGEST_COUNTER
+  fi
+}
+add-zsh-hook precmd _unhook_autosuggest
 
 # FZF completions
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
