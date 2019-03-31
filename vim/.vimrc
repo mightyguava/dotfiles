@@ -72,6 +72,9 @@ Plug 'scrooloose/syntastic'
 " Golang plugin
 Plug 'fatih/vim-go'
 
+" Kotlin
+Plug 'udalov/kotlin-vim'
+
 " Javascript syntax highlighting and indentation
 Plug 'pangloss/vim-javascript'
 " Prefer local eslint so that it can use local eslint plugins
