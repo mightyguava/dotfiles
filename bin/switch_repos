@@ -5,11 +5,14 @@ __switch_repos() {
   local repos_root="${GOPATH:-/Users/yunchi/dev}/src"
 
   if [ "${repo_name}" = "-ls" ]; then
-    # List all repos
-    find "${repos_root}"/github.com "${repos_root}"/gitlab.com -type d -depth 2 -maxdepth 2 -exec basename {} +
     if [ -d ~/Projects ]; then
-      find ~/Projects -type d -depth 1 -maxdepth 1 -exec basename {} +
+      find -L ~/Projects -type d -depth 1 -maxdepth 1 -exec basename {} +
     fi
+    if [ -d ~/Development ]; then
+      find -L ~/Development -maxdepth 3 -name '.git' | sed -E 's/(.*)\/\.git/\1/' | xargs basename
+    fi
+    # List all repos
+    find -L "${repos_root}"/github.com "${repos_root}"/gitlab.com "${repos_root}"/git.sqcorp.co -type d -depth 2 -maxdepth 2 -exec basename {} +
     return
   fi
 
@@ -24,9 +27,12 @@ __switch_repos() {
   fi
 
   # If repo name is given, find full path to repo
-  local repo_path=`find "${repos_root}"/github.com "${repos_root}"/gitlab.com -type d -depth 2 -maxdepth 2  -name "${repo_name}" | head -n 1`
+    repo_path=`find -L ~/Projects -type d -depth 1 -maxdepth 1 -name "${repo_name}" | head -n 1`
   if [ -z "${repo_path}" ]; then
-    repo_path=`find ~/Projects -type d -depth 1 -maxdepth 1 -name "${repo_name}" | head -n 1`
+    repo_path=`find -L ~/Development -type d -maxdepth 3 -path "*${repo_name}/.git" | xargs dirname | head -n 1`
+  fi
+  if [ -z "${repo_path}" ]; then
+    local repo_path=`find -L "${repos_root}"/github.com "${repos_root}"/gitlab.com "${repos_root}"/git.sqcorp.co -type d -depth 2 -maxdepth 2  -name "${repo_name}" | head -n 1`
   fi
   if [ -z "${repo_path}" ]; then
     echo "No such repo: \"$1\""
