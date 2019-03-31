@@ -104,7 +104,7 @@ function! BuildYCM(info)
   if executable("cmake") && (a:info.status == 'installed' || a:info.force)
     let opts = ''
     if executable("go")
-      let opts .= ' --gocode-completer'
+      let opts .= ' --go-completer'
     endif
     if executable("npm")
       " let opts .= ' --tern-completer'
