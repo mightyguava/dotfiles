@@ -515,6 +515,8 @@ map <leader>ff :Files<cr>
 map <leader>fb :Buffers<cr>
 " Start an Ag prompt to get a term, and then filter
 map <leader>ag :Ag<Space>
+" Start an Rg prompt to get a term, and then filter
+map <leader>ag :Rg<Space>
 " Search lines in open buffers
 map <leader>fl :Lines<cr>
 " Search commits
