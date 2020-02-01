@@ -102,16 +102,18 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH=~/scripts:~/bin:${PATH}
 
-# Source local custom zshrc
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 [[ -f ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme ]] && \
+  POWERLEVEL9K_COLOR_SCHEME=light
+  P9KGT_FOREGROUND=dark
   source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.zsh/purepower ]] && \
   source ~/.zsh/purepower
+
+# Source local custom zshrc
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 true
