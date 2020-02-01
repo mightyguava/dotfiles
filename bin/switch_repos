@@ -29,7 +29,7 @@ __switch_repos() {
   # If repo name is given, find full path to repo
     repo_path=`find -L ~/Projects -type d -depth 1 -maxdepth 1 -name "${repo_name}" | head -n 1`
   if [ -z "${repo_path}" ]; then
-    repo_path=`find -L ~/Development -type d -maxdepth 3 -path "*${repo_name}/.git" | xargs dirname | head -n 1`
+    repo_path=`find -L ~/Development -type d -maxdepth 3 -path "*${repo_name}/.git" | xargs -n 1 dirname | head -n 1`
   fi
   if [ -z "${repo_path}" ]; then
     local repo_path=`find -L "${repos_root}"/github.com "${repos_root}"/gitlab.com "${repos_root}"/git.sqcorp.co -type d -depth 2 -maxdepth 2  -name "${repo_name}" | head -n 1`
