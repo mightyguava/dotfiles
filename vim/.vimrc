@@ -708,7 +708,7 @@ let g:go_info_mode = 'guru'
 " let g:go_update_time = 2000
 
 let g:go_term_enabled = 0
-let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave = 0
 let g:go_metalinter_autosave_enabled = ['vet', 'vetshadow', 'golint', 'gotype']
 
 " Override traditional commands for alternating (test) files
