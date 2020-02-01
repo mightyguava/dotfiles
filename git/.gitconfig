@@ -33,3 +33,7 @@
 	rebase = true
 [rebase]
 	autoStash = true
+
+[include]
+  # include a local git config, if it exists
+  path = .gitconfig.local
