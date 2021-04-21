@@ -26,7 +26,7 @@ docker_rm_containers() {
   docker rm -f $(docker ps -aq)
 }
 docker_rm_all() {
-  docker rmi -f "$(docker images -q)"
+  docker rmi -f $(docker images -q)
 }
 
 alias g="source ~/bin/switch_repos"
@@ -51,3 +51,7 @@ c() {
 }
 
 alias minikube-start='minikube start --vm-driver hyperkit  --insecure-registry localhost:5000'
+tg() {
+  terrafool install
+  terragrunt "$@"
+}
