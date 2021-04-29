@@ -100,7 +100,7 @@ add-zsh-hook precmd _unhook_autosuggest
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export PATH=~/scripts:~/bin:${PATH}
+export PATH="~/scripts:~/bin:/opt/homebrew/bin:$PATH"
 
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 
