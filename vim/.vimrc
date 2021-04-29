@@ -93,31 +93,10 @@ Plug 'skreuzer/vim-prometheus'
 " Terraform syntax
 Plug 'hashivim/vim-terraform'
 
-" Autocomplete
-function! BuildYCM(info)
-  " Post-install hook for YCM
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if !empty($NO_INSTALL_YCM) | return | endif
-  if executable("cmake") && (a:info.status == 'installed' || a:info.force)
-    let opts = ''
-    if executable("go")
-      let opts .= ' --go-completer'
-    endif
-    if executable("npm")
-      " let opts .= ' --tern-completer'
-    endif
-    " Only attempt to install if cmake is available, since YCM needs it to
-    " compile dependencies
-    execute '!./install.py' . opts
-  endif
-endfunction
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+" LSP client
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Snippets (also YCM errors if UltiSnips is not installed if VIM version is
-" <7.4.107... https://github.com/Valloric/YouCompleteMe/issues/2335)
+" Snippets
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'             " The snippet engine
 Plug 'honza/vim-snippets'         " The actual snippets
@@ -648,28 +627,6 @@ if isdirectory(expand("~/.vim/plugged/nerdtree"))
   let NERDTreeShowHidden=1
   let g:nerdtree_tabs_open_on_gui_startup=0
 endif
-" }}
-
-" YouCompleteMe, UltiSnips, and SuperTab {{
-let g:ycm_autoclose_preview_window_after_completion = 1
-
-" Bind YCM to <C-n>
-let g:ycm_key_list_select_completion = ['<C-n>', '<C-j>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<C-k>', '<Up>']
-
-" Let SuperTab translate <tab> to <C-n> for completions, otherwise goes to UltiSnips
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" Nice UltiSnips bindings
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-" Remap some keys to use YCM's code navigation commands
-nnoremap gd :YcmCompleter GoTo<CR>
-nnoremap gD :YcmCompleter GetDoc<CR>
-nnoremap gr :YcmCompleter GoToReferences<CR>
-autocmd FileType typescript nnoremap gd :YcmCompleter GoToDefinition<CR>
 " }}
 
 " Syntastic {{
