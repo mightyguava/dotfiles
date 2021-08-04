@@ -12,8 +12,36 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias gnb='git fetch origin; git checkout origin/master -b'
-alias gr='git rebase --autosquash origin/master'
+_get_main_branch() {
+  if [[ -n "$(git ls-remote --heads origin main)" ]]; then
+    echo "main"
+  elif [[ -n "$(git ls-remote --heads origin master)" ]]; then
+    echo "master"
+  else
+    echo "branches 'master' and 'main' do not exist on origin"
+    return 1
+  fi
+}
+
+gnb () {
+  git fetch origin
+  _gr_branch="$(_get_main_branch)"
+  if [ $? -ne 0 ]; then
+    echo $_gr_branch
+    unset _gr_branch
+    return 1
+  fi
+  git checkout origin/${_gr_branch} -b $1
+}
+gr () {
+  _gr_branch="$(_get_main_branch)"
+  if [ $? -ne 0 ]; then
+    echo $_gr_branch
+    unset _gr_branch
+    return 1
+  fi
+  git rebase --autosquash origin/${_gr_branch} "$@"
+}
 alias gf='git fetch origin'
 
 alias help=tldr
