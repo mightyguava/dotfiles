@@ -97,9 +97,9 @@ Plug 'hashivim/vim-terraform'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Snippets
-Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'             " The snippet engine
-Plug 'honza/vim-snippets'         " The actual snippets
+" Plug 'ervandew/supertab'
+" Plug 'SirVer/ultisnips'             " The snippet engine
+" Plug 'honza/vim-snippets'         " The actual snippets
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -860,3 +860,13 @@ if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
