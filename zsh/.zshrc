@@ -113,6 +113,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [[ -f ~/.zsh/purepower ]] && \
   source ~/.zsh/purepower
 
+export APPLE_SSH_ADD_BEHAVIOR="macos"
+
 # Source local custom zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
