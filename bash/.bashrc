@@ -52,3 +52,4 @@ fi
 
 [ -f ~/Library/Preferences/org.dystroy.broot/launcher/bash/br] && source ~/Library/Preferences/org.dystroy.broot/launcher/bash/br
 
+. "$HOME/.cargo/env"

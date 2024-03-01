@@ -6,4 +6,4 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-export PATH="$HOME/.cargo/bin:$PATH"
+. "$HOME/.cargo/env"
