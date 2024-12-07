@@ -100,7 +100,7 @@ add-zsh-hook precmd _unhook_autosuggest
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export PATH="~/scripts:~/bin:/opt/homebrew/bin:$PATH"
+export PATH="$HOME/scripts:$HOME/bin:/opt/homebrew/bin:$PATH"
 
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 
@@ -115,7 +115,12 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 export APPLE_SSH_ADD_BEHAVIOR="macos"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # Source local custom zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 true
+
