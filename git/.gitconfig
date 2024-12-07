@@ -36,4 +36,6 @@
 
 [include]
   # include a local git config, if it exists
-  path = .gitconfig.local
+	path = .gitconfig.local
+[init]
+	defaultBranch = main
