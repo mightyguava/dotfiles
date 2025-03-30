@@ -93,9 +93,6 @@ Plug 'skreuzer/vim-prometheus'
 " Terraform syntax
 Plug 'hashivim/vim-terraform'
 
-" LSP client
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " Snippets
 " Plug 'ervandew/supertab'
 " Plug 'SirVer/ultisnips'             " The snippet engine

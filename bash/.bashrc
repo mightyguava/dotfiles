@@ -50,6 +50,4 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
 fi
 
-[ -f ~/Library/Preferences/org.dystroy.broot/launcher/bash/br] && source ~/Library/Preferences/org.dystroy.broot/launcher/bash/br
-
 . "$HOME/.cargo/env"
