@@ -15,15 +15,10 @@ repo to ${HOME}/.dotfiles and run the symlink strategy.
 BOOTSTRAP_DIR="${HOME}/.dotfiles"
 
 # Use rsync if copying, ln -sf if symlinking
-if [ -n "$1" ]; then
-  if [ "$1" == "copy" ]; then
-    shift
-    COPY=1
-    LINK="rsync -a --delete -L"
-  else
-    echo "${USAGE}"
-    exit 1
-  fi
+if [[ -n "$1" && "$1" == "copy" ]]; then
+  shift
+  COPY=1
+  LINK="rsync -a --delete -L"
 else
   LINK="ln -sf"
 fi
@@ -64,24 +59,6 @@ ${LINK} ${SRC}/bash/.git-completion.bash ${TARGET}/.git-completion.bash
 ${LINK} ${SRC}/git/.gitconfig ${TARGET}/.gitconfig
 ${LINK} ${SRC}/tmux/.tmux.conf ${TARGET}/.tmux.conf
 
-# Attempt to install cmake if needed for VIM YouCompleteMe plugin
-if [ -z "${NO_INSTALL_CMAKE}" ] && ! type cmake &>/dev/null; then
-  os=$(uname -s)
-  case "$os" in
-    Darwin)
-      type brew &>/dev/null && brew install cmake || echo "Could not install cmake"
-      ;;
-    Linux)
-      echo "Installing cmake for vim YouCompleteMe plugin. Sudo password may be needed"
-      sudo apt-get --assume-yes install cmake || echo "Could not install cmake"
-      ;;
-    *)
-      echo "Unknown OS, don't know how to install cmake"
-      ;;
-  esac
-fi
-
-
 if type nvim &> /dev/null && [ -z "${COPY}" ]; then
   vim_cmd="nvim"
 else
@@ -98,7 +75,7 @@ ${LINK} ${SRC}/vim/.vimrc ${TARGET}/.vimrc
 mkdir -p ${TARGET}/.config
 rm -rf ${TARGET}/.config/nvim
 ${LINK} ${TARGET}/.vim ${TARGET}/.config/nvim
-${LINK} ${SRC}/vim/.vimrc ${TARGET}/.config/nvim/init.vim
+${LINK} ${SRC}/vim/init.lua ${TARGET}/.config/nvim/init.lua
 
 rm -rf ${TARGET}/.zsh
 if [ -z "$COPY" ]; then
