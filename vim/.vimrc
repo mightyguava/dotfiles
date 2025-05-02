@@ -211,13 +211,8 @@ endif
 syntax enable
 
 try
-    if &term == 'nvim' || &term == 'xterm-256color' || &term == 'screen-256color'
-        colorscheme wombat256mod
-        set background=light
-    else
-        colorscheme wombat
-        set background=dark
-    endif
+  colorscheme wombat256mod
+  set background=dark
 catch
 endtry
 
@@ -272,7 +267,7 @@ autocmd BufEnter * EnableStripWhitespaceOnSave
 
 filetype indent on
 
-" Linebreak on 500 characters
+" Linebreak on 100 characters
 set linebreak
 set textwidth=100
 
@@ -347,9 +342,6 @@ endtry
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-
-
 " }}
 
 """"""""""""""""""""""""""""""
@@ -421,33 +413,6 @@ map <leader>pp :setlocal paste!<cr>
 " Change Working Directory to that of the current file
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
-
-" }}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => GUI Settings {{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set extra options when running in GUI mode
-if has("gui_running")
-  set guitablabel=%M\ %t
-  set guioptions-=T           " Remove the toolbar
-  set guioptions-=e           " Use terminal tabs in favor of GUI tabs
-  " Make GVIM bigger on startup
-  set lines=40 columns=84
-  if !exists("g:spf13_no_big_font")
-      if LINUX() && has("gui_running")
-          set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
-      elseif OSX() && has("gui_running")
-          set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
-      elseif WINDOWS() && has("gui_running")
-          set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
-      endif
-  endif
-else
-  if &term == 'xterm' || &term == 'screen'
-      set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-  endif
-endif
 
 " }}
 
