@@ -30,7 +30,7 @@ Plug 'tpope/vim-abolish'
 " In-file navigation
 Plug 'easymotion/vim-easymotion'
 " Multiple cursors with <C-n>
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Automatic closing of quotes, parenthesis, braces
 Plug 'Raimondi/delimitMate'
@@ -72,31 +72,8 @@ Plug 'scrooloose/syntastic'
 " Golang plugin
 Plug 'fatih/vim-go'
 
-" Kotlin
-Plug 'udalov/kotlin-vim'
-
-" Javascript syntax highlighting and indentation
-Plug 'pangloss/vim-javascript'
-" Prefer local eslint so that it can use local eslint plugins
-" Don't want to install eslint plugins globally
-Plug 'mtscout6/syntastic-local-eslint.vim'
-" Format with prettier/prettier
-Plug 'prettier/vim-prettier', {
-	\ 'do': 'yarn install',
-	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql']
-  \ }
-" Typescript!
-Plug 'leafgarland/typescript-vim'
-
-" Prometheus rule format
-Plug 'skreuzer/vim-prometheus'
 " Terraform syntax
 Plug 'hashivim/vim-terraform'
-
-" Snippets
-" Plug 'ervandew/supertab'
-" Plug 'SirVer/ultisnips'             " The snippet engine
-" Plug 'honza/vim-snippets'         " The actual snippets
 
 " Add plugins to &runtimepath
 call plug#end()
