@@ -12,7 +12,12 @@ endfunction
 silent function! WINDOWS()
     return  (has('win32') || has('win64'))
 endfunction
-
+silent function! VSCODE()
+    return exists('g:vscode')
+endfunction
+silent function! NVIM()
+    return has('nvim')
+endfunction
 "}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -20,67 +25,64 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-" Git wrapper
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
-" Abolish - case/abbrev preserving substitution, snake/camel coersion
-Plug 'tpope/vim-abolish'
-
 " In-file navigation
 Plug 'easymotion/vim-easymotion'
-" Multiple cursors with <C-n>
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Automatic closing of quotes, parenthesis, braces
 Plug 'Raimondi/delimitMate'
 " Changing braces with cs
 Plug 'tpope/vim-surround'
 
-" Edit in quickfix list
-Plug 'Olical/vim-enmasse'
+if !VSCODE()
+  " Git wrapper
+  Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
 
-" Wombat theme
-Plug 'vim-scripts/Wombat'
-Plug 'vim-scripts/wombat256.vim'
+  " Abolish - case/abbrev preserving substitution, snake/camel coersion
+  Plug 'tpope/vim-abolish'
 
-" Whitespace highlighting
-Plug 'ntpeters/vim-better-whitespace'
+  " Multiple cursors with <C-n>
+  Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
-" Fzf fuzzy file matcher
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+  " Edit in quickfix list
+  Plug 'Olical/vim-enmasse'
 
-" File browser
-Plug 'scrooloose/nerdtree'
+  " Wombat theme
+  Plug 'vim-scripts/Wombat'
+  Plug 'vim-scripts/wombat256.vim'
 
-" Tagbar for viewing file ctags
-Plug 'majutsushi/tagbar'
+  " Whitespace highlighting
+  Plug 'ntpeters/vim-better-whitespace'
 
-" Sessions
-Plug 'xolox/vim-session'
-Plug 'xolox/vim-misc' " Dependency of vim-session
+  " Fzf fuzzy file matcher
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
 
-" Dash integration
-if OSX()
-  Plug 'rizzatti/dash.vim'
-endif
+  " File browser
+  Plug 'scrooloose/nerdtree'
 
-" Syntax checker
-Plug 'scrooloose/syntastic'
+  " Sessions
+  Plug 'xolox/vim-session'
+  Plug 'xolox/vim-misc' " Dependency of vim-session
 
-" Golang plugin
-Plug 'fatih/vim-go'
+  " Dash integration
+  if OSX()
+    Plug 'rizzatti/dash.vim'
+  endif
 
-" Terraform syntax
-Plug 'hashivim/vim-terraform'
+  " Golang plugin
+  Plug 'fatih/vim-go'
 
-if has("nvim")
-  Plug 'williamboman/mason.nvim'
-  Plug 'williamboman/mason-lspconfig.nvim'
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'hrsh7th/cmp-nvim-lsp'
-  Plug 'hrsh7th/nvim-cmp'
+  " Terraform syntax
+  Plug 'hashivim/vim-terraform'
+
+  if NVIM()
+    Plug 'williamboman/mason.nvim'
+    Plug 'williamboman/mason-lspconfig.nvim'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/nvim-cmp'
+  endif
 endif
 
 " Add plugins to &runtimepath
@@ -212,6 +214,96 @@ endif
 
 " }}
 
+""""""""""""""""""""""""""""""
+" => Visual mode related {{
+""""""""""""""""""""""""""""""
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" Allow using the repeat operator with a visual selection (!)
+" http://stackoverflow.com/a/8064607/127816
+vnoremap . :normal .<CR>
+
+" }}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around and windows {{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Disable highlight when <leader>/ is pressed
+map <silent> <leader>/ :noh<cr>
+
+" Visual navigation with j/k
+noremap j gj
+noremap k gk
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+if has("nvim")
+  tnoremap <C-w>h <C-\><C-n><C-w>h
+  tnoremap <C-w>j <C-\><C-n><C-w>j
+  tnoremap <C-w>k <C-\><C-n><C-w>k
+  tnoremap <C-w>l <C-\><C-n><C-w>l
+endif
+
+" }}
+
+""""""""""""""""""""""""""""""
+" => Code folding {{
+""""""""""""""""""""""""""""""
+set foldenable                  " Auto fold code
+nmap <leader>f0 :set foldlevel=0<CR>
+nmap <leader>f1 :set foldlevel=1<CR>
+nmap <leader>f2 :set foldlevel=2<CR>
+nmap <leader>f3 :set foldlevel=3<CR>
+nmap <leader>f4 :set foldlevel=4<CR>
+nmap <leader>f5 :set foldlevel=5<CR>
+nmap <leader>f6 :set foldlevel=6<CR>
+nmap <leader>f7 :set foldlevel=7<CR>
+nmap <leader>f8 :set foldlevel=8<CR>
+nmap <leader>f9 :set foldlevel=9<CR>
+
+" }}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings {{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Replace word under cursor
+nmap <leader>s :%s/\<<C-r><C-w>\>//<Left>
+
+nmap Y y$
+
+" Move a line of text using ALT+[jk] or Command+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
+
+" }}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => !!! Parsing ends here in VS Code !!!
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if VSCODE()
+  "Do not execute rest of init.vim, do not apply any configs
+  finish
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -288,46 +380,9 @@ set cindent
 set nowrap
 " }}
 
-""""""""""""""""""""""""""""""
-" => Visual mode related {{
-""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
-" Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-
-" Allow using the repeat operator with a visual selection (!)
-" http://stackoverflow.com/a/8064607/127816
-vnoremap . :normal .<CR>
-
-" }}
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers {{
+" => Buffers and shell {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Disable highlight when <leader>/ is pressed
-map <silent> <leader>/ :noh<cr>
-
-" Visual navigation with j/k
-noremap j gj
-noremap k gk
-
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-if has("nvim")
-  tnoremap <C-w>h <C-\><C-n><C-w>h
-  tnoremap <C-w>j <C-\><C-n><C-w>j
-  tnoremap <C-w>k <C-\><C-n><C-w>k
-  tnoremap <C-w>l <C-\><C-n><C-w>l
-endif
-
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
 
@@ -348,27 +403,6 @@ try
 catch
 endtry
 
-" Return to last edit position when opening files (You want this!)
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-" }}
-
-""""""""""""""""""""""""""""""
-" => Code folding {{
-""""""""""""""""""""""""""""""
-set foldenable                  " Auto fold code
-nmap <leader>f0 :set foldlevel=0<CR>
-nmap <leader>f1 :set foldlevel=1<CR>
-nmap <leader>f2 :set foldlevel=2<CR>
-nmap <leader>f3 :set foldlevel=3<CR>
-nmap <leader>f4 :set foldlevel=4<CR>
-nmap <leader>f5 :set foldlevel=5<CR>
-nmap <leader>f6 :set foldlevel=6<CR>
-nmap <leader>f7 :set foldlevel=7<CR>
-nmap <leader>f8 :set foldlevel=8<CR>
-nmap <leader>f9 :set foldlevel=9<CR>
-
-" }}
-
 """"""""""""""""""""""""""""""
 " => Status line {{
 """"""""""""""""""""""""""""""
@@ -377,29 +411,6 @@ set laststatus=2
 
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ CWD:%r%{pathshorten(fnamemodify(getcwd(),\":~\"))}%h\ \ L:%l,C:%c
-
-" }}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings {{
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Replace word under cursor
-nmap <leader>s :%s/\<<C-r><C-w>\>//<Left>
-
-nmap Y y$
-
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
 
 " }}
 
@@ -422,12 +433,16 @@ map <leader>pp :setlocal paste!<cr>
 cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" }}
+
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins {{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FZF {
+" FZF {{
 " Search through files within git repo
 map <C-p> :GFiles<cr>
 map <leader>fg :GFiles<cr>
@@ -474,6 +489,11 @@ command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 " }}
 
+" Better Whitespace {{
+ " Strip whitespace on save
+  autocmd BufEnter * EnableStripWhitespaceOnSave
+" }}
+
 " NERDTree {{
 if isdirectory(expand("~/.vim/plugged/nerdtree"))
   map <C-e> :NERDTreeToggle<CR>
@@ -487,23 +507,6 @@ if isdirectory(expand("~/.vim/plugged/nerdtree"))
   let NERDTreeShowHidden=1
   let g:nerdtree_tabs_open_on_gui_startup=0
 endif
-" }}
-
-" Syntastic {{
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_java_checkers = []
-let g:syntastic_javascript_checkers = ['eslint']
-" Make the loc list auto-show when there are errors, hide when there are not
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_loc_list_height = 3
-" Make sure syntastic does not conflict with fatih/vim-go
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-" Add to the status line? Not sure if I like the effect.
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 " }}
 
 " Vim-Go {{
@@ -572,37 +575,6 @@ autocmd FileType go nmap <leader>d :GoDecls<CR>
 autocmd FileType go nmap <leader>D :GoDeclsDir<CR>
 " }}
 
-" Tag Bar {{
-nmap <F8> :TagbarToggle<CR>
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
-" }}
-
 " Dash {{
 map <silent> <leader><leader>d <Plug>DashSearch
 map <silent> <leader><leader>gd <Plug>DashGlobalSearch
@@ -617,12 +589,59 @@ let g:session_autosave = 'yes'
 let delimitMate_expand_cr = 1
 " }}
 
-" Javascript specific {{
-  " Syntax highlighting
-  let g:javascript_plugin_jsdoc = 1
-  " Prettier
-  " let g:prettier#autoformat = 0
-  " autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
+" Neovim Lua {{
+lua << EOF
+  vim.lsp.enable('zls')
+
+  require("mason").setup()
+  require("mason-lspconfig").setup()
+  require("mason-lspconfig").setup_handlers {
+      -- The first entry (without a key) will be the default handler
+      -- and will be called for each installed server that doesn't have
+      -- a dedicated handler.
+      function (server_name) -- default handler (optional)
+          require("lspconfig")[server_name].setup {}
+      end,
+      -- Next, you can provide a dedicated handler for specific servers.
+      -- For example, a handler override for the `rust_analyzer`:
+      -- ["rust_analyzer"] = function ()
+      --     require("rust-tools").setup {}
+      -- end
+  }
+
+  -- Set up nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<Tab>'] = function(fallback)
+          if cmp.visible() then
+            cmp.confirm()
+          else
+            fallback()
+          end
+        end
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+    })
+  })
+
+  -- Set up lspconfig.
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  require('lspconfig')['zls'].setup {
+    capabilities = capabilities
+  }
+EOF
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
