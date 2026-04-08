@@ -45,9 +45,3 @@ export PATH=~/scripts:~/bin:${PATH}
 
 # Source local custom bashrc
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local
-
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
-fi
-
-. "$HOME/.cargo/env"
