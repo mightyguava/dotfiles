@@ -590,6 +590,7 @@ let delimitMate_expand_cr = 1
 " }}
 
 " Neovim Lua {{
+if has('nvim')
 lua << EOF
   vim.lsp.enable('zls')
 
@@ -642,6 +643,7 @@ lua << EOF
     capabilities = capabilities
   }
 EOF
+endif
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
