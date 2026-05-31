@@ -71,6 +71,8 @@ ${LINK} ${SRC}/vim/plug.vim ${TARGET}/.vim/autoload/plug.vim
 mkdir -p ${TARGET}/.vim/after/ftplugin
 ${LINK} ${SRC}/vim/after/ftplugin/python.vim ${TARGET}/.vim/after/ftplugin/python.vim
 ${LINK} ${SRC}/vim/.vimrc ${TARGET}/.vimrc
+# Link Neovim Lua modules into vim dir (shared with nvim below)
+${LINK} ${SRC}/vim/lua ${TARGET}/.vim/lua
 # Share vim config with neovim
 mkdir -p ${TARGET}/.config
 rm -rf ${TARGET}/.config/nvim
