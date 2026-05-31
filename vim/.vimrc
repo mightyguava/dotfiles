@@ -47,9 +47,8 @@ if !VSCODE()
   " Edit in quickfix list
   Plug 'Olical/vim-enmasse'
 
-  " Wombat theme
-  Plug 'vim-scripts/Wombat'
-  Plug 'vim-scripts/wombat256.vim'
+  " Solarized8 light theme (terminal-palette mode)
+  Plug 'lifepillar/vim-solarized8'
 
   " Whitespace highlighting
   Plug 'ntpeters/vim-better-whitespace'
@@ -302,10 +301,13 @@ endif
 " Enable syntax highlighting
 syntax enable
 
+let g:solarized_termtrans = 0
+set termguicolors
+set background=light
 try
-  colorscheme wombat256mod
-  set background=dark
+  colorscheme solarized8_high
 catch
+  colorscheme solarized8
 endtry
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -484,7 +486,16 @@ command! -bang -nargs=? -complete=dir GFiles
 
 " Better Whitespace {{
  " Strip whitespace on save
-  autocmd BufEnter * EnableStripWhitespaceOnSave
+  augroup BetterWhitespace
+    autocmd!
+    autocmd BufEnter * call s:EnableStripWhitespaceOnSave()
+  augroup END
+
+  function! s:EnableStripWhitespaceOnSave()
+    if exists(':EnableStripWhitespaceOnSave')
+      EnableStripWhitespaceOnSave
+    endif
+  endfunction
 " }}
 
 " NERDTree {{
