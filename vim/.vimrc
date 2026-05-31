@@ -47,8 +47,13 @@ if !VSCODE()
   " Edit in quickfix list
   Plug 'Olical/vim-enmasse'
 
-  " Solarized8 light theme (terminal-palette mode)
-  Plug 'lifepillar/vim-solarized8'
+  if NVIM()
+    Plug 'lifepillar/vim-solarized8', { 'branch': 'neovim' }
+    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+    Plug 'projekt0n/github-nvim-theme'
+  else
+    Plug 'lifepillar/vim-solarized8'
+  endif
 
   " Whitespace highlighting
   Plug 'ntpeters/vim-better-whitespace'
@@ -304,11 +309,18 @@ syntax enable
 let g:solarized_termtrans = 0
 set termguicolors
 set background=light
-try
-  colorscheme solarized8_high
-catch
-  colorscheme solarized8
-endtry
+if NVIM()
+  try
+    colorscheme catppuccin-latte
+  catch
+    colorscheme solarized8_high
+  endtry
+else
+  try
+    colorscheme solarized8_high
+  catch
+  endtry
+endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
