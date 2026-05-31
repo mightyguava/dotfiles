@@ -93,6 +93,12 @@ if [ -z "$COPY" ]; then
   mkdir -p ${TARGET}/bin
   ${LINK} ${SRC}/bin/csearch_rel ${TARGET}/bin/csearch_rel
   ${LINK} ${SRC}/bin/switch_repos ${TARGET}/bin/switch_repos
+
+  # Install fish function and completion (only if not already present)
+  mkdir -p ${TARGET}/.config/fish/functions
+  mkdir -p ${TARGET}/.config/fish/completions
+  [ ! -e ${TARGET}/.config/fish/functions/switch_repos.fish ] && ${LINK} ${SRC}/fish/functions/switch_repos.fish ${TARGET}/.config/fish/functions/switch_repos.fish
+  [ ! -e ${TARGET}/.config/fish/completions/switch_repos.fish ] && ${LINK} ${SRC}/fish/completions/switch_repos.fish ${TARGET}/.config/fish/completions/switch_repos.fish
 else
   # Copy the non-submodules
   mkdir -p ${TARGET}/.zsh
