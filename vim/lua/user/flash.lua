@@ -12,6 +12,13 @@ flash.setup({
     char = {
       enabled = true,
       jump_labels = true,
+      -- Disable jump_labels in operator-pending mode so ct/dt/etc.
+      -- work without needing an extra label keypress.
+      config = function(opts)
+        if vim.fn.mode(true):find("o") then
+          opts.jump_labels = false
+        end
+      end,
     },
     -- Treesitter jump: S to jump to any parent node
     treesitter = {
