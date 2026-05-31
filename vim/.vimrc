@@ -107,7 +107,6 @@ set autoread
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
-let g:mapleader = ","
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -133,11 +132,6 @@ set wildmode=list:longest,full  " Command <Tab> completion, list matches, then l
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc,*.class
 " Ignore version control and system files
-if has("win16") || has("win32")
-    set wildignore+=.git\*,.hg\*,.svn\*
-else
-    " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store " Seems like setting wildignore interferes with fugitive :Gdiff command when doing 3-way merge.
-endif
 
 " Always show current position
 set ruler
@@ -172,7 +166,9 @@ set incsearch
 set nospell
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw
+if !has('nvim')
+  set lazyredraw
+endif
 
 " For regular expressions turn magic on
 set magic
@@ -197,9 +193,6 @@ set ttimeoutlen=100
 
 " set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
-
-" Send more characters for redraws
-set ttyfast
 
 " Enable mouse use in all modes
 set mouse=a
@@ -362,9 +355,6 @@ set listchars=tab:>-
 " Disable showing tabs for Go files since tabs are the standard
 autocmd FileType go autocmd BufEnter <buffer> set nolist
 
-" Strip whitespace on save
-autocmd BufEnter * EnableStripWhitespaceOnSave
-
 filetype indent on
 
 " Linebreak on 100 characters
@@ -375,7 +365,6 @@ set textwidth=100
 set nojoinspaces
 
 set autoindent
-set cindent
 " Enable soft wrap
 set nowrap
 
@@ -399,7 +388,7 @@ command Tterm tabnew term://$SHELL
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 " Switch CWD to the GITROOT of the open buffer
-map <leader>gcd :execute 'cd' fugitive#repo().tree()<cr>
+map <leader>gcd :execute 'cd' FugitiveWorkTree()<cr>
 
 " Specify the behavior when switching between buffers
 try
@@ -432,7 +421,9 @@ map <leader>q :e ~/buffer<cr>
 map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+if !has('nvim')
+  map <leader>pp :setlocal paste!<cr>
+endif
 
 " Change Working Directory to that of the current file
 cmap cwd lcd %:p:h
@@ -458,8 +449,6 @@ map <C-t> :Files<cr>
 map <leader>ff :Files<cr>
 " Search through open buffers
 map <leader>fb :Buffers<cr>
-" Start an Ag prompt to get a term, and then filter
-map <leader>ag :Ag<Space>
 " Start an Rg prompt to get a term, and then filter
 map <leader>ag :Rg<Space>
 " Search lines in open buffers
@@ -470,7 +459,7 @@ map <leader>fc :Commits<cr>
 map <leader>cs :CSearch<Space>
 map <leader>ch :CSearchCwd<Space>
 " Trigger an index
-map :CIndex :!cindex
+command! CIndex !cindex
 
 " Augmenting Ag command using fzf#vim#with_preview function
 "   * fzf#vim#with_preview([[options], preview window, [toggle keys...]])
@@ -529,12 +518,12 @@ let g:go_fmt_options = {
   \ }
 " Show type information for word under cursor
 " let g:go_auto_type_info = 1
-let g:go_info_mode = 'guru'
+let g:go_info_mode = 'gopls'
 " let g:go_update_time = 2000
 
 let g:go_term_enabled = 0
 let g:go_metalinter_autosave = 0
-let g:go_metalinter_autosave_enabled = ['vet', 'vetshadow', 'golint', 'gotype']
+let g:go_metalinter_autosave_enabled = ['vet', 'staticcheck']
 
 " Override traditional commands for alternating (test) files
 augroup go
