@@ -44,8 +44,6 @@ if !VSCODE()
   " Multiple cursors with <C-n>
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
-  " Edit in quickfix list
-  Plug 'Olical/vim-enmasse'
 
   if NVIM()
     Plug 'lifepillar/vim-solarized8', { 'branch': 'neovim' }
