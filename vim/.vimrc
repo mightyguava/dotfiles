@@ -26,7 +26,6 @@ endfunction
 call plug#begin('~/.vim/plugged')
 
 " In-file navigation
-Plug 'easymotion/vim-easymotion'
 
 " Automatic closing of quotes, parenthesis, braces
 " Changing braces with cs
@@ -79,6 +78,7 @@ if !VSCODE()
     Plug 'hrsh7th/nvim-cmp'
     Plug 'windwp/nvim-autopairs'
     Plug 'lewis6991/gitsigns.nvim'
+    Plug 'folke/flash.nvim'
   endif
 endif
 

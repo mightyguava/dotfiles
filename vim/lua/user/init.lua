@@ -7,6 +7,7 @@ require('user.cmp')
 require('user.lsp')
 require('user.autopairs')
 require('user.gitsigns')
+require('user.flash')
 
 -- Optional: DAP debugger (uncomment when delve debugging is needed)
 -- require('user.dap')
