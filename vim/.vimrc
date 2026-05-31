@@ -62,8 +62,7 @@ if !VSCODE()
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
 
-  " File browser
-  Plug 'scrooloose/nerdtree'
+
 
   " Sessions
   Plug 'tpope/vim-obsession'
@@ -510,19 +509,38 @@ command! -bang -nargs=? -complete=dir GFiles
   endfunction
 " }}
 
-" NERDTree {{
-if isdirectory(expand("~/.vim/plugged/nerdtree"))
-  map <C-e> :NERDTreeToggle<CR>
-  map <leader>e :NERDTreeFind<CR>
+" Netrw file tree (replaces NERDTree) {{
+" Use tree-style listing, no banner, open files in previous window
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 25
 
-  let NERDTreeShowBookmarks=1
-  let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-  let NERDTreeChDirMode=1
-  let NERDTreeQuitOnOpen=0
-  let NERDTreeMouseMode=2
-  let NERDTreeShowHidden=1
-  let g:nerdtree_tabs_open_on_gui_startup=0
-endif
+" Toggle netrw explorer on the left at CWD
+function! s:ToggleNetrw()
+  for w in range(1, winnr('$'))
+    if getwinvar(w, '&filetype') == 'netrw'
+      execute w . 'wincmd c'
+      return
+    endif
+  endfor
+  Lexplore
+endfunction
+
+" Reveal current file in the file tree
+function! s:NetrwFind()
+  let l:dir = expand('%:p:h')
+  " If tree is already open, close and reopen at file's directory
+  for w in range(1, winnr('$'))
+    if getwinvar(w, '&filetype') == 'netrw'
+      execute w . 'wincmd c'
+    endif
+  endfor
+  execute 'Lexplore' l:dir
+endfunction
+
+map <C-e> :call <SID>ToggleNetrw()<CR>
+map <leader>e :call <SID>NetrwFind()<CR>
 " }}
 
 " Vim-Go {{
