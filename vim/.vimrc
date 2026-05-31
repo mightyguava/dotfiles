@@ -35,7 +35,6 @@ Plug 'tpope/vim-surround'
 if !VSCODE()
   " Git wrapper
   Plug 'tpope/vim-fugitive'
-  Plug 'airblade/vim-gitgutter'
 
   " Abolish - case/abbrev preserving substitution, snake/camel coersion
   Plug 'tpope/vim-abolish'
@@ -81,6 +80,7 @@ if !VSCODE()
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'windwp/nvim-autopairs'
+    Plug 'lewis6991/gitsigns.nvim'
   endif
 endif
 

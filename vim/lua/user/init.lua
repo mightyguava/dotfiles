@@ -6,6 +6,7 @@ require('user.mason')
 require('user.cmp')
 require('user.lsp')
 require('user.autopairs')
+require('user.gitsigns')
 
 -- Optional: DAP debugger (uncomment when delve debugging is needed)
 -- require('user.dap')
