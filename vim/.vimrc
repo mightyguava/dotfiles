@@ -55,8 +55,6 @@ if !VSCODE()
     Plug 'lifepillar/vim-solarized8'
   endif
 
-  " Whitespace highlighting
-  Plug 'ntpeters/vim-better-whitespace'
 
   " Fzf fuzzy file matcher
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -496,18 +494,11 @@ command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 " }}
 
-" Better Whitespace {{
- " Strip whitespace on save
-  augroup BetterWhitespace
-    autocmd!
-    autocmd BufEnter * call s:EnableStripWhitespaceOnSave()
-  augroup END
-
-  function! s:EnableStripWhitespaceOnSave()
-    if exists(':EnableStripWhitespaceOnSave')
-      EnableStripWhitespaceOnSave
-    endif
-  endfunction
+" Strip trailing whitespace on save
+augroup StripTrailingWhitespace
+  autocmd!
+  autocmd BufWritePre * %s/\s\+$//e
+augroup END
 " }}
 
 " NERDTree {{
