@@ -62,8 +62,7 @@ if !VSCODE()
   Plug 'scrooloose/nerdtree'
 
   " Sessions
-  Plug 'xolox/vim-session'
-  Plug 'xolox/vim-misc' " Dependency of vim-session
+  Plug 'tpope/vim-obsession'
 
   " Dash integration
   if OSX()
@@ -572,11 +571,6 @@ autocmd FileType go nmap <leader>D :GoDeclsDir<CR>
 " Dash {{
 map <silent> <leader><leader>d <Plug>DashSearch
 map <silent> <leader><leader>gd <Plug>DashGlobalSearch
-" }}
-
-" Sessions {{
-let g:session_autoload = 'no'
-let g:session_autosave = 'yes'
 " }}
 
 " delimitMate {{
