@@ -29,7 +29,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'easymotion/vim-easymotion'
 
 " Automatic closing of quotes, parenthesis, braces
-Plug 'Raimondi/delimitMate'
 " Changing braces with cs
 Plug 'tpope/vim-surround'
 
@@ -81,6 +80,7 @@ if !VSCODE()
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/nvim-cmp'
+    Plug 'windwp/nvim-autopairs'
   endif
 endif
 
@@ -589,9 +589,6 @@ map <silent> <leader><leader>d <Plug>DashSearch
 map <silent> <leader><leader>gd <Plug>DashGlobalSearch
 " }}
 
-" delimitMate {{
-let delimitMate_expand_cr = 1
-" }}
 
 " Neovim Lua configuration is now in lua/user/*.lua, loaded via init.lua
 " See: ~/.dotfiles/vim/lua/user/ for Mason, LSP, CMP, and DAP config
