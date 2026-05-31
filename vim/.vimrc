@@ -518,6 +518,10 @@ let g:go_fmt_options = {
 " Show type information for word under cursor
 " let g:go_auto_type_info = 1
 let g:go_info_mode = 'gopls'
+" Use gopls for definitions (already the default, but be explicit)
+let g:go_def_mode = 'gopls'
+" Free K for LSP hover — disable vim-go's :GoDoc keywordprg
+let g:go_doc_keywordprg_enabled = 0
 " let g:go_update_time = 2000
 
 let g:go_term_enabled = 0
@@ -577,41 +581,8 @@ map <silent> <leader><leader>gd <Plug>DashGlobalSearch
 let delimitMate_expand_cr = 1
 " }}
 
-" Neovim Lua {{
-if has('nvim')
-lua << EOF
-  require("mason").setup()
-  require("mason-lspconfig").setup()
-
-  -- Set up nvim-cmp.
-  local cmp = require'cmp'
-
-  cmp.setup({
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-      ['<Tab>'] = function(fallback)
-          if cmp.visible() then
-            cmp.confirm()
-          else
-            fallback()
-          end
-        end
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-    })
-  })
-EOF
-endif
-" }}
+" Neovim Lua configuration is now in lua/user/*.lua, loaded via init.lua
+" See: ~/.dotfiles/vim/lua/user/ for Mason, LSP, CMP, and DAP config
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions {{
