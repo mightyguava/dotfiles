@@ -39,8 +39,6 @@ if !VSCODE()
   " Abolish - case/abbrev preserving substitution, snake/camel coersion
   Plug 'tpope/vim-abolish'
 
-  " Multiple cursors with <C-n>
-  Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 
   if NVIM()
