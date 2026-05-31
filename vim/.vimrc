@@ -25,10 +25,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-" In-file navigation
-
-" Automatic closing of quotes, parenthesis, braces
-" Changing braces with cs
+" Changing surrounding braces/quotes with cs/ds/ys
 Plug 'tpope/vim-surround'
 
 if !VSCODE()
@@ -37,8 +34,6 @@ if !VSCODE()
 
   " Abolish - case/abbrev preserving substitution, snake/camel coersion
   Plug 'tpope/vim-abolish'
-
-
 
   if NVIM()
     Plug 'lifepillar/vim-solarized8', { 'branch': 'neovim' }
@@ -71,13 +66,21 @@ if !VSCODE()
   Plug 'hashivim/vim-terraform'
 
   if NVIM()
+    " LSP server binary manager
     Plug 'mason-org/mason.nvim'
+    " Bridge mason-installed LSPs to vim.lsp.enable()
     Plug 'mason-org/mason-lspconfig.nvim'
+    " LSP client default configs (used by mason-lspconfig)
     Plug 'neovim/nvim-lspconfig'
+    " Bridge nvim-cmp to LSP completion sources
     Plug 'hrsh7th/cmp-nvim-lsp'
+    " Completion engine (popup menu, sources)
     Plug 'hrsh7th/nvim-cmp'
+    " Auto-close pairs, LSP-aware (replaces delimitMate)
     Plug 'windwp/nvim-autopairs'
+    " Async git signs, blame, hunk staging (replaces vim-gitgutter)
     Plug 'lewis6991/gitsigns.nvim'
+    " Search-based jump labels, enhanced f/t (replaces easymotion)
     Plug 'folke/flash.nvim'
   endif
 endif
