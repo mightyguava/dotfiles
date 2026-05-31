@@ -378,6 +378,11 @@ set autoindent
 set cindent
 " Enable soft wrap
 set nowrap
+
+augroup markdown_wrap
+  autocmd!
+  autocmd FileType markdown setlocal textwidth=0 wrap linebreak
+augroup END
 " }}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
