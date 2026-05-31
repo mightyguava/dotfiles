@@ -25,11 +25,12 @@ Personal dotfiles for macOS and Linux, managed via symlinks (`install.sh`).
 │       ├── gitsigns.lua   # Git signs and blame (gitsigns.nvim)
 │       ├── flash.lua      # Jump navigation (flash.nvim)
 │       └── dap.lua        # Debugger (disabled by default)
-├── fish/               # Fish shell config
-│   ├── functions/
-│   │   └── switch_repos.fish  # Jump to repo by name or cd to repo root
-│   └── completions/
-│       └── switch_repos.fish  # Tab completion for switch_repos (repo names)
+├── fish/               # Fish shell config (dirs symlinked wholesale)
+│   ├── config.fish      # Main config, sources config.local.fish
+│   ├── fish_plugins     # Fisher plugin list
+│   ├── functions/       # Auto-loaded functions
+│   ├── completions/     # Tab completions
+│   └── conf.d/          # Sourced snippets (aliases, tool init)
 └── zsh/                # Zsh config
 ```
 
@@ -40,8 +41,11 @@ Personal dotfiles for macOS and Linux, managed via symlinks (`install.sh`).
 ~/.config/nvim/  → ~/.vim (symlink)
 ~/.config/nvim/lua  → ~/.dotfiles/vim/lua (symlink, for require() discovery)
 ~/.vimrc         → ~/.dotfiles/vim/.vimrc
-~/.config/fish/functions/switch_repos.fish    → ~/.dotfiles/fish/functions/switch_repos.fish
-~/.config/fish/completions/switch_repos.fish  → ~/.dotfiles/fish/completions/switch_repos.fish
+~/.config/fish/functions/    → ~/.dotfiles/fish/functions/ (symlink)
+~/.config/fish/completions/  → ~/.dotfiles/fish/completions/ (symlink)
+~/.config/fish/conf.d/       → ~/.dotfiles/fish/conf.d/ (symlink)
+~/.config/fish/config.fish   → ~/.dotfiles/fish/config.fish (symlink)
+~/.config/fish/fish_plugins  → ~/.dotfiles/fish/fish_plugins (symlink)
 ```
 
 ## Plugin management
@@ -71,4 +75,4 @@ nvim --headless -c "PlugUpdate" -c "qa!"
 - **Lua modules**: All Neovim-only config goes in `vim/lua/user/`. Loaded via `require('user')`.
 - **vim-go + gopls**: vim-go handles build/test/run/coverage/tags. gopls (via LSP) handles code intelligence. `gD` is reserved for vim-go's go-def-vertical.
 - **Don't push until asked**: User reviews changes locally. Commit, but wait for explicit instruction before `git push`.
-- **Shell**: macOS and Linux. Zsh is the primary managed shell (configs in this repo). Fish is the primary interactive shell (config in `~/.config/fish/` and `fish/` in this repo). Bash is minimal — changes must not break bash, but don't need feature parity.
+- **Shell**: macOS and Linux. Zsh is the primary managed shell (configs in this repo). Fish is the primary interactive shell (config in `fish/`, symlinked as whole directories via install.sh). Device-local fish overrides go in `~/.config/fish/config.local.fish` (sourced by config.fish, not in repo). Bash is minimal — changes must not break bash, but don't need feature parity.

@@ -94,13 +94,16 @@ if [ -z "$COPY" ]; then
   ${LINK} ${SRC}/bin/csearch_rel ${TARGET}/bin/csearch_rel
   ${LINK} ${SRC}/bin/switch_repos ${TARGET}/bin/switch_repos
 
-  # Install fish function, completion, and conf (only if not already present)
-  mkdir -p ${TARGET}/.config/fish/functions
-  mkdir -p ${TARGET}/.config/fish/completions
-  mkdir -p ${TARGET}/.config/fish/conf.d
-  [ ! -e ${TARGET}/.config/fish/functions/switch_repos.fish ] && ${LINK} ${SRC}/fish/functions/switch_repos.fish ${TARGET}/.config/fish/functions/switch_repos.fish
-  [ ! -e ${TARGET}/.config/fish/completions/switch_repos.fish ] && ${LINK} ${SRC}/fish/completions/switch_repos.fish ${TARGET}/.config/fish/completions/switch_repos.fish
-  [ ! -e ${TARGET}/.config/fish/conf.d/switch_repos.fish ] && ${LINK} ${SRC}/fish/conf.d/switch_repos.fish ${TARGET}/.config/fish/conf.d/switch_repos.fish
+  # Fish config — symlink whole directories and top-level files
+  # config.local.fish (not in repo) is sourced by config.fish for device-specific overrides
+  rm -rf ${TARGET}/.config/fish/functions
+  ${LINK} ${SRC}/fish/functions ${TARGET}/.config/fish/functions
+  rm -rf ${TARGET}/.config/fish/completions
+  ${LINK} ${SRC}/fish/completions ${TARGET}/.config/fish/completions
+  rm -rf ${TARGET}/.config/fish/conf.d
+  ${LINK} ${SRC}/fish/conf.d ${TARGET}/.config/fish/conf.d
+  ${LINK} ${SRC}/fish/config.fish ${TARGET}/.config/fish/config.fish
+  ${LINK} ${SRC}/fish/fish_plugins ${TARGET}/.config/fish/fish_plugins
 else
   # Copy the non-submodules
   mkdir -p ${TARGET}/.zsh
