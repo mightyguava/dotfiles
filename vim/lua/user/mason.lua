@@ -1,18 +1,10 @@
--- Mason: manages LSP servers, formatters, linters
-require('mason').setup()
-
--- mason-lspconfig: bridges Mason-installed servers to lspconfig
-require('mason-lspconfig').setup({
-  automatic_installation = true,
-  ensure_installed = { 'gopls' },
+-- Shared LSP capabilities from nvim-cmp (applies to all servers)
+vim.lsp.config('*', {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
 })
 
--- Default capabilities from nvim-cmp for rich LSP features
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 -- gopls: the official Go language server
-require('lspconfig').gopls.setup({
-  capabilities = capabilities,
+vim.lsp.config('gopls', {
   settings = {
     gopls = {
       analyses = {
@@ -33,4 +25,13 @@ require('lspconfig').gopls.setup({
       },
     },
   },
+})
+
+-- Mason: manages LSP server binaries
+require('mason').setup()
+
+-- mason-lspconfig v2: bridges Mason-installed servers to vim.lsp.enable()
+-- automatic_enable = true is the default — calls vim.lsp.enable('gopls') for us
+require('mason-lspconfig').setup({
+  ensure_installed = { 'gopls' },
 })
