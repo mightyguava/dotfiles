@@ -311,7 +311,7 @@ set termguicolors
 set background=light
 if NVIM()
   try
-    colorscheme catppuccin-latte
+    colorscheme github_light
   catch
     colorscheme solarized8_high
   endtry
