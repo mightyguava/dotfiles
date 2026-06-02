@@ -1,15 +1,30 @@
 #!/bin/bash
 
+# Emit paths to .git directories under the given root(s).
+# Prefers fd over find for speed.
+_find_gitdirs() {
+    if command -v fd &>/dev/null; then
+        fd --follow --max-depth 3 --hidden --no-ignore --type d --glob '.git' "$@" 2>/dev/null | sed 's|/$||'
+    else
+        find -L "$@" -maxdepth 3 -name '.git' 2>/dev/null
+    fi
+}
+
 __switch_repos() {
   local repo_name="$1"
 
+  # Default search roots; override in your shell rc:
+  #   export SWITCH_REPOS_ROOTS="$HOME/Projects $HOME/Development $HOME/src"
+  local roots="${SWITCH_REPOS_ROOTS:-$HOME/Projects $HOME/Development}"
+
   if [ "${repo_name}" = "-ls" ]; then
-    if [ -d ~/Projects ]; then
-      find -L ~/Projects -type d -depth 1 -maxdepth 1 -exec basename {} +
-    fi
-    if [ -d ~/Development ]; then
-      find -L ~/Development -maxdepth 3 -name '.git' | sed -E 's/(.*)\/\.git/\1/' | xargs basename
-    fi
+    for root in ${roots}; do
+      [ -d "${root}" ] || continue
+      _find_gitdirs "${root}" | while IFS= read -r gitdir; do
+        local parent="${gitdir%/.git}"
+        echo "${parent##*/}"
+      done
+    done
     return
   fi
 
@@ -23,15 +38,18 @@ __switch_repos() {
     return
   fi
 
-  # If repo name is given, find full path to repo
-    repo_path=`find -L ~/Projects -type d -depth 1 -maxdepth 1 -name "${repo_name}" | head -n 1`
-  if [ -z "${repo_path}" ]; then
-    repo_path=`find -L ~/Development -maxdepth 3 -path "*${repo_name}/.git" | xargs -n 1 dirname | head -n 1`
+  # Repo name given: find and cd into it — use targeted search with early termination
+  local repo_path
+  if command -v fd &>/dev/null; then
+    repo_path=$(fd --follow --max-depth 3 --hidden --no-ignore --type d --full-path --glob "**/${repo_name}/.git" ${roots} 2>/dev/null | sed 's|/$||' | head -n 1)
+  else
+    repo_path=$(find -L ${roots} -maxdepth 3 -path "*/${repo_name}/.git" -print -quit 2>/dev/null)
   fi
+
   if [ -z "${repo_path}" ]; then
     echo "No such repo: \"$1\""
   else
-    cd "${repo_path}"
+    cd "$(dirname "${repo_path}")"
     if [ -n "${VIRTUAL_ENV}" ]; then
       # Exit current virtualenv, if any
       deactivate
