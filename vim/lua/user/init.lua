@@ -8,6 +8,7 @@ require('user.lsp')
 require('user.autopairs')
 require('user.gitsigns')
 require('user.flash')
+require('user.persistence')
 
 -- Optional: DAP debugger (uncomment when delve debugging is needed)
 -- require('user.dap')

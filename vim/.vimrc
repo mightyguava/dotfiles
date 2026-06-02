@@ -52,7 +52,7 @@ if !VSCODE()
   Plug 'scrooloose/nerdtree'
 
   " Sessions
-  Plug 'tpope/vim-obsession'
+  Plug 'folke/persistence.nvim'
 
   " Dash integration
   if OSX()
