@@ -1,4 +1,8 @@
--- Session persistence (replaces vim-obsession)
+-- Session persistence
+
+require("persistence").setup({
+  dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
+})
 
 -- load the session for the current directory
 vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
