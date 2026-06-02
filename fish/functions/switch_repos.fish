@@ -1,13 +1,17 @@
 function switch_repos --description "Jump to a git repo by name, or cd to repo root"
     set -l repo_name $argv[1]
 
+    # Default search roots; override in config.local.fish:
+    #   set -g SWITCH_REPOS_ROOTS ~/Projects ~/Development ~/other
+    if not set -q SWITCH_REPOS_ROOTS
+        set -g SWITCH_REPOS_ROOTS ~/Projects ~/Development
+    end
+
     # List known repos
     if test "$repo_name" = "-ls"
-        if test -d ~/Projects
-            find -L ~/Projects -maxdepth 1 -type d -mindepth 1 -exec basename {} \;
-        end
-        if test -d ~/Development
-            find -L ~/Development -maxdepth 3 -name '.git' | sed -E 's|(.*)/\.git|\1|' | xargs basename
+        for root in $SWITCH_REPOS_ROOTS
+            test -d "$root" || continue
+            _find_gitdirs "$root" | string replace -r '.*/([^/]+)/\.git$' '$1'
         end
         return
     end
@@ -23,19 +27,17 @@ function switch_repos --description "Jump to a git repo by name, or cd to repo r
         return
     end
 
-    # Repo name given: find and cd into it
-    set -l repo_path (find -L ~/Projects -maxdepth 1 -type d -name "$repo_name" 2>/dev/null | head -n 1)
-
-    if test -z "$repo_path"
-        set -l matches (find -L ~/Development -maxdepth 3 -path "*/$repo_name/.git" 2>/dev/null)
-        if test -n "$matches"
-            set repo_path (dirname "$matches[1]")
-        end
+    # Repo name given: find and cd into it — use targeted search with early termination
+    set -l repo_path
+    if command -q fd
+        set repo_path (fd --follow --max-depth 3 --hidden --no-ignore --type d --full-path --glob "**/$repo_name/.git" $SWITCH_REPOS_ROOTS 2>/dev/null | string replace -r '/$' '' | head -n 1)
+    else
+        set repo_path (find -L $SWITCH_REPOS_ROOTS -maxdepth 3 -path "*/$repo_name/.git" -print -quit 2>/dev/null)
     end
 
     if test -z "$repo_path"
         echo "No such repo: \"$repo_name\""
     else
-        cd "$repo_path"
+        cd (dirname "$repo_path")
     end
 end

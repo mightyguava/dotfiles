@@ -18,37 +18,23 @@ If a <target_dir> is provided, symlinks/copies to target_dir instead of ${HOME}
 
 ## The `switch_repos` tool
 
-`switch_repos` is a script for switching between git repositories that follow the Go workspace
-convention. You code does not have to be Go, but just that it follows the same directory scheme. See
-[How to Write Go Code](https://golang.org/doc/code.html#Workspaces) for details.
+`switch_repos` is a fish function for quickly jumping between git repositories.
+The alias `g` is bound to it (`fish/conf.d/switch_repos.fish`).
 
-`switch_repos` consists of:
-- A short bash script
-- An alias `g` for activating the script (it cannot be invoked directly as a command)
+- `g <repo_name>` — cd into the named repo
+- `g` — cd to the root of the current git repo
+- `g -ls` — list all known repos
 
-In addition to switching repos, it also supports entering `virtualenvs` if it detects a Python repo,
-and you have previously created a virtualenv using `virtualenvwrapper` with the same name as the repo
-root folder.
+### Configuration
 
-Finally, it also supports `zsh` autocompletions.
+Search roots are controlled by the global variable `SWITCH_REPOS_ROOTS`.
+It defaults to `~/Projects ~/Development`.  Override it in
+`~/.config/fish/config.local.fish`:
 
-### Installation
-
-First make sure you have
-[`virtualenvwrapper`](http://virtualenvwrapper.readthedocs.io/en/latest/install.html) installed.
-
-1. Place `bin/switch_repos` on your `$PATH`, like in `/usr/local/bin`
-2. Add this your `.zshrc` or `.bashrc`
+```fish
+set -g SWITCH_REPOS_ROOTS ~/Projects ~/src ~/work/repos
 ```
-alias g="source ~/bin/switch_repos"
-```
-3. If you use zsh, put `zsh/_switch_repos` under `~/.zsh`. (This assumes you have zsh configured to
-   support autocompletion at all)
-4. Source `.zshrc` or `.bashrc`, or open a new shell.
 
-### Usage
-
-`g <repo_name>` switches to the repo and activates the virtualenv if one exists with the same name
-as the repo
-
-`g` at any subfolder in the repo tree will switch to the root.
+The function searches up to 3 levels deep under each root, looking for `.git`
+directories.  It prefers [`fd`](https://github.com/sharkdp/fd) when installed;
+otherwise falls back to `find`.
